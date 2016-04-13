@@ -32,7 +32,13 @@ import org.apache.http.entity.StringEntity;
 
 public class Client {
 
+    private CloseableHttpClient httpClient;
+    
     public Client(){
+    }
+    
+    public Client(CloseableHttpClient httpClient){
+        this.httpClient = httpClient;
     }
     
     public URI buildURL(String baseURL, String endpoint, Map<String,String> queryParams){

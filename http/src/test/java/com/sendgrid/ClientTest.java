@@ -78,13 +78,7 @@ public class ClientTest extends Mockito {
             when(httpClient.execute(Matchers.any(HttpGet.class))).thenReturn(response);
             HttpGet httpGet = new HttpGet("https://api.test.com");
             CloseableHttpResponse resp = httpClient.execute(httpGet);
-            ResponseHandler<String> handler = new BasicResponseHandler();
-            Header headersOut[] = resp.getAllHeaders();
-            for(Header h:headersOut){
-                System.out.println(h.getName() + " " + h.getValue());
-            }
             testResponse = client.getResponse(resp);
-            System.out.println(testResponse.responseBody);
             resp.close();           
         }catch(IOException ex){
             ex.printStackTrace();
