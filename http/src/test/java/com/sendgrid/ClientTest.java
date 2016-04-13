@@ -92,4 +92,41 @@ public class ClientTest extends Mockito {
         }
         Assert.assertEquals(testResponse.responseHeaders, headers);
     }
+    
+    @Test
+    public void testGet()
+    {
+        Response testResponse = new Response();
+        Request request = new Request(); 
+        Header[] mockedHeaders = null;
+        try{
+            CloseableHttpResponse response = mock(CloseableHttpResponse.class);
+            HttpEntity entity = mock(HttpEntity.class);
+            StatusLine statusline = mock(StatusLine.class);
+            when(statusline.getStatusCode()).thenReturn(200);
+            when(response.getStatusLine()).thenReturn(statusline);
+            when(response.getEntity()).thenReturn(new InputStreamEntity(new ByteArrayInputStream("{\"message\":\"success\"}".getBytes())));
+            mockedHeaders = new Header[] { new BasicHeader("headerA", "valueA") };
+            when(response.getAllHeaders()).thenReturn(mockedHeaders);
+            when(httpClient.execute(Matchers.any(HttpGet.class))).thenReturn(response);
+            Client client = new Client(httpClient);
+            request.method = Method.GET;
+            request.endpoint = "/test";
+            Map<String,String> requestHeaders = new HashMap<String, String>();
+            requestHeaders.put("Authorization", "Bearer XXXX");
+            requestHeaders.put("Content-Type", "application/json");
+            request.requestHeaders = requestHeaders;
+            testResponse = client.Get(request);         
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+
+        Assert.assertTrue(testResponse.statusCode == 200);
+        Assert.assertEquals(testResponse.responseBody, "{\"message\":\"success\"}");
+        Map<String,String> headers = new HashMap<String,String>();
+        for(Header h:mockedHeaders){
+           headers.put(h.getName(), h.getValue());
+        }
+        Assert.assertEquals(testResponse.responseHeaders, headers);
+    }    
 }

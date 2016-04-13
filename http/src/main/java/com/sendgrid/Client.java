@@ -35,6 +35,7 @@ public class Client {
     private CloseableHttpClient httpClient;
     
     public Client(){
+        this.httpClient = HttpClients.createDefault();
     }
     
     public Client(CloseableHttpClient httpClient){
@@ -85,17 +86,18 @@ public class Client {
     
     public Response Get(Request request){
         Response response = new Response();
-        CloseableHttpClient httpclient = HttpClients.createDefault();
         
         URI url = buildURL(request.baseURL, request.endpoint, request.queryParams);
         HttpGet httpGet = new HttpGet(url.toString());
         
-        for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
-            httpGet.setHeader(entry.getKey(), entry.getValue());
+        if(request.requestHeaders != null){
+            for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
+                httpGet.setHeader(entry.getKey(), entry.getValue());
+            }            
         }
         
         try{
-            CloseableHttpResponse resp = httpclient.execute(httpGet);
+            CloseableHttpResponse resp = httpClient.execute(httpGet);
             response = getResponse(resp);
             resp.close();
         }catch(IOException ex){
@@ -107,14 +109,16 @@ public class Client {
     
     public Response Post(Request request){
         Response response = new Response();
-        CloseableHttpClient httpclient = HttpClients.createDefault();
         
         URI url = buildURL(request.baseURL, request.endpoint, request.queryParams);
         HttpPost httpPost = new HttpPost(url.toString());
         
-        for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
-            httpPost.setHeader(entry.getKey(), entry.getValue());
+        if(request.requestHeaders != null){
+            for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
+                httpPost.setHeader(entry.getKey(), entry.getValue());
+            }            
         }
+        
         try{
             httpPost.setEntity(new StringEntity(request.requestBody));
         }catch(IOException ex){
@@ -122,7 +126,7 @@ public class Client {
         }
         
         try{
-            CloseableHttpResponse resp = httpclient.execute(httpPost);
+            CloseableHttpResponse resp = httpClient.execute(httpPost);
             response = getResponse(resp);
             resp.close();
         }catch(IOException ex){
@@ -134,13 +138,14 @@ public class Client {
     
     public Response Patch(Request request){
         Response response = new Response();
-        CloseableHttpClient httpclient = HttpClients.createDefault();
         
         URI url = buildURL(request.baseURL, request.endpoint, request.queryParams);
         HttpPatch httpPatch = new HttpPatch(url.toString());
         
-        for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
-            httpPatch.setHeader(entry.getKey(), entry.getValue());
+        if(request.requestHeaders != null){
+            for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
+                httpPatch.setHeader(entry.getKey(), entry.getValue());
+            }            
         }
         
         try{
@@ -150,7 +155,7 @@ public class Client {
         }
         
         try{
-            CloseableHttpResponse resp = httpclient.execute(httpPatch);
+            CloseableHttpResponse resp = httpClient.execute(httpPatch);
             response = getResponse(resp);
             resp.close();
         }catch(IOException ex){
@@ -162,12 +167,14 @@ public class Client {
 
     public Response Put(Request request){
         Response response = new Response();
-        CloseableHttpClient httpclient = HttpClients.createDefault();
         
         URI url = buildURL(request.baseURL, request.endpoint, request.queryParams);
         HttpPut httpPut = new HttpPut(url.toString());
-        for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
-            httpPut.setHeader(entry.getKey(), entry.getValue());
+        
+        if(request.requestHeaders != null){
+            for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
+                httpPut.setHeader(entry.getKey(), entry.getValue());
+            }            
         }
         
         try{
@@ -177,7 +184,7 @@ public class Client {
         }
         
         try{
-            CloseableHttpResponse resp = httpclient.execute(httpPut);
+            CloseableHttpResponse resp = httpClient.execute(httpPut);
             response = getResponse(resp);
             resp.close();
         }catch(IOException ex){
@@ -189,17 +196,18 @@ public class Client {
     
     public Response Delete(Request request){
         Response response = new Response();
-        CloseableHttpClient httpclient = HttpClients.createDefault();
         
         URI url = buildURL(request.baseURL, request.endpoint, request.queryParams);
         HttpDelete httpDelete = new HttpDelete(url.toString());
         
-        for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
-            httpDelete.setHeader(entry.getKey(), entry.getValue());
+        if(request.requestHeaders != null){
+            for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
+                httpDelete.setHeader(entry.getKey(), entry.getValue());
+            }            
         }
         
         try{
-            CloseableHttpResponse resp = httpclient.execute(httpDelete);
+            CloseableHttpResponse resp = httpClient.execute(httpDelete);
             response = getResponse(resp);
             resp.close();
         }catch(IOException ex){
