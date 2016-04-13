@@ -1,6 +1,7 @@
 import com.sendgrid.*;
 import java.io.OutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public class Example
 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         Client client = new Client();
         
         Request request = new Request();
@@ -33,7 +34,7 @@ public class Example
             System.out.println(response.responseBody);
             System.out.println(response.responseHeaders);
         }catch(IOException ex){
-            ex.printStackTrace();
+            throw ex;
         }
         request.queryParams = null;
         
@@ -47,7 +48,7 @@ public class Example
             System.out.println(response.responseBody);
             System.out.println(response.responseHeaders);
         }catch(IOException ex){
-            ex.printStackTrace();
+            throw ex;
         }
         String apiKeyID = "";
         try{
@@ -55,7 +56,7 @@ public class Example
             JsonNode json = mapper.readTree(response.responseBody);
             apiKeyID = json.path("api_key_id").asText(); 
         }catch(IOException ex){
-            System.out.println(ex.toString());
+            throw ex;
         }
         request.requestBody = "";
         
@@ -68,7 +69,7 @@ public class Example
             System.out.println(response.responseBody);
             System.out.println(response.responseHeaders);
         }catch(IOException ex){
-            ex.printStackTrace();
+            throw ex;
         }
         
         // PATCH
@@ -80,7 +81,7 @@ public class Example
             System.out.println(response.responseBody);
             System.out.println(response.responseHeaders);
         }catch(IOException ex){
-            ex.printStackTrace();
+            throw ex;
         }
         request.requestBody = "";
         
@@ -93,7 +94,7 @@ public class Example
             System.out.println(response.responseBody);
             System.out.println(response.responseHeaders);
         }catch(IOException ex){
-            ex.printStackTrace();
+            throw ex;
         }
         request.requestBody = "";
         
@@ -104,7 +105,7 @@ public class Example
             System.out.println(response.statusCode);
             System.out.println(response.responseHeaders);
         }catch(IOException ex){
-            ex.printStackTrace();
+            throw ex;
         }
     }
 }
