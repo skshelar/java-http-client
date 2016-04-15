@@ -60,7 +60,7 @@ public class ClientTest extends Mockito {
     String endpoint = "/endpoint";
     URI uri = null;
     Map<String,String> queryParams = new HashMap<String,String>();
-    queryParams.put("test", "1");
+    queryParams.put("test1", "1");
     queryParams.put("test2", "2");
     try {
       uri = client.buildUri(baseUri, endpoint, queryParams);
@@ -71,8 +71,8 @@ public class ClientTest extends Mockito {
     }
     
     String url = uri.toString();
-    System.out.println(url);
-    Assert.assertEquals(url, "https://api.test.com/endpoint?test=1&test2=2");
+    Assert.assertTrue(url.equals("https://api.test.com/endpoint?test2=2&test1=1") ||
+           url.equals("https://api.test.com/endpoint?test1=1&test2=test2"));
   }
   
   @Test
