@@ -71,6 +71,7 @@ public class ClientTest extends Mockito {
     }
     
     String url = uri.toString();
+    System.out.println(url);
     Assert.assertEquals(url, "https://api.test.com/endpoint?test=1&test2=2");
   }
   
