@@ -1,132 +1,178 @@
 package com.sendgrid;
 
-import java.net.URI;
-import java.util.Map;
-import java.util.HashMap;
-import java.io.IOException;
-import java.io.ByteArrayInputStream;
-
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPatch;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.Header;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.HttpEntity;
-import org.apache.http.message.BasicStatusLine;
-import org.apache.http.HttpVersion;
 import org.apache.http.HttpStatus;
-import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.HttpVersion;
 import org.apache.http.StatusLine;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPatch;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicStatusLine;
 
-import org.junit.Test;
 import org.junit.Assert;
 import org.junit.Before;
-import org.mockito.Mockito;
+import org.junit.Test;
+
 import org.mockito.Matchers;
+import org.mockito.Mockito;
 
-/**
- * Unit test for simple App.
- */
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ClientTest extends Mockito {
-    
-    private CloseableHttpClient httpClient;
-    
-    @Before
-    public void setUp() throws Exception{
-        this.httpClient = mock(CloseableHttpClient.class);
+  
+  private CloseableHttpClient httpClient;
+  private CloseableHttpResponse response;
+  private HttpEntity entity;
+  private StatusLine statusline;
+  
+  @Before
+  public void setUp() throws Exception {
+    this.httpClient = mock(CloseableHttpClient.class);
+    this.response = mock(CloseableHttpResponse.class);
+    this.entity = mock(HttpEntity.class);
+    this.statusline = mock(StatusLine.class);
+  }
+  
+  @Test
+  public void testbuildUri() {
+    Client client = new Client();
+    String baseUri = "api.test.com";
+    String endpoint = "/endpoint";
+    URI uri = null;
+    Map<String,String> queryParams = new HashMap<String,String>();
+    queryParams.put("test", "1");
+    queryParams.put("test2", "2");
+    try {
+      uri = client.buildUri(baseUri, endpoint, queryParams);
+    } catch (URISyntaxException ex) {
+      StringWriter errors = new StringWriter();
+      ex.printStackTrace(new PrintWriter(errors));
+      Assert.assertTrue(errors.toString(), false);
     }
     
-    @Test   
-    public void testBuildURL()
-    {
-        Client client = new Client();
-        String baseURL = "api.test.com";
-        String endpoint = "/endpoint";
-        Map<String,String> queryParams = new HashMap<String,String>();
-        queryParams.put("test", "1");
-        queryParams.put("test2", "2");
-        URI uri = client.buildURL(baseURL, endpoint, queryParams);
-        String url = uri.toString();
-        Assert.assertEquals(url, "https://api.test.com/endpoint?test=1&test2=2");
+    String url = uri.toString();
+    Assert.assertEquals(url, "https://api.test.com/endpoint?test=1&test2=2");
+  }
+  
+  @Test
+  public void testGetResponse() {
+    Client client = new Client();
+    Response testResponse = new Response();
+    Header[] mockedHeaders = null;
+    try {
+      when(statusline.getStatusCode()).thenReturn(200);
+      when(response.getStatusLine()).thenReturn(statusline);
+      when(response.getEntity()).thenReturn(
+          new InputStreamEntity(
+            new ByteArrayInputStream(
+              "{\"message\":\"success\"}".getBytes())));
+      mockedHeaders = new Header[] { new BasicHeader("headerA", "valueA") };
+      when(response.getAllHeaders()).thenReturn(mockedHeaders);
+      when(httpClient.execute(Matchers.any(HttpGet.class))).thenReturn(response);
+      HttpGet httpGet = new HttpGet("https://api.test.com");
+      CloseableHttpResponse resp = httpClient.execute(httpGet);
+      testResponse = client.getResponse(resp);
+      resp.close();           
+    } catch (IOException ex) {
+      StringWriter errors = new StringWriter();
+      ex.printStackTrace(new PrintWriter(errors));
+      Assert.assertTrue(errors.toString(), false);
     }
-    
-    @Test
-    public void testGetResponse()
-    {
-        Client client = new Client();
-        Response testResponse = new Response();
-        Header[] mockedHeaders = null;
-        try{
-            CloseableHttpResponse response = mock(CloseableHttpResponse.class);
-            HttpEntity entity = mock(HttpEntity.class);
-            StatusLine statusline = mock(StatusLine.class);
-            when(statusline.getStatusCode()).thenReturn(200);
-            when(response.getStatusLine()).thenReturn(statusline);
-            when(response.getEntity()).thenReturn(new InputStreamEntity(new ByteArrayInputStream("{\"message\":\"success\"}".getBytes())));
-            mockedHeaders = new Header[] { new BasicHeader("headerA", "valueA") };
-            when(response.getAllHeaders()).thenReturn(mockedHeaders);
-            when(httpClient.execute(Matchers.any(HttpGet.class))).thenReturn(response);
-            HttpGet httpGet = new HttpGet("https://api.test.com");
-            CloseableHttpResponse resp = httpClient.execute(httpGet);
-            testResponse = client.getResponse(resp);
-            resp.close();           
-        }catch(IOException ex){
-            ex.printStackTrace();
-        }
 
-        Assert.assertTrue(testResponse.statusCode == 200);
-        Assert.assertEquals(testResponse.responseBody, "{\"message\":\"success\"}");
-        Map<String,String> headers = new HashMap<String,String>();
-        for(Header h:mockedHeaders){
-           headers.put(h.getName(), h.getValue());
-        }
-        Assert.assertEquals(testResponse.responseHeaders, headers);
+    Assert.assertTrue(testResponse.statusCode == 200);
+    Assert.assertEquals(testResponse.responseBody, "{\"message\":\"success\"}");
+    Map<String,String> headers = new HashMap<String,String>();
+    for (Header h:mockedHeaders) {
+      headers.put(h.getName(), h.getValue());
     }
-    
-    @Test
-    public void testGet()
-    {
-        Response testResponse = new Response();
-        Request request = new Request(); 
-        Header[] mockedHeaders = null;
-        try{
-            CloseableHttpResponse response = mock(CloseableHttpResponse.class);
-            HttpEntity entity = mock(HttpEntity.class);
-            StatusLine statusline = mock(StatusLine.class);
-            when(statusline.getStatusCode()).thenReturn(200);
-            when(response.getStatusLine()).thenReturn(statusline);
-            when(response.getEntity()).thenReturn(new InputStreamEntity(new ByteArrayInputStream("{\"message\":\"success\"}".getBytes())));
-            mockedHeaders = new Header[] { new BasicHeader("headerA", "valueA") };
-            when(response.getAllHeaders()).thenReturn(mockedHeaders);
-            when(httpClient.execute(Matchers.any(HttpGet.class))).thenReturn(response);
-            Client client = new Client(httpClient);
-            request.method = Method.GET;
-            request.endpoint = "/test";
-            Map<String,String> requestHeaders = new HashMap<String, String>();
-            requestHeaders.put("Authorization", "Bearer XXXX");
-            requestHeaders.put("Content-Type", "application/json");
-            request.requestHeaders = requestHeaders;
-            testResponse = client.Get(request);         
-        }catch(IOException ex){
-            ex.printStackTrace();
-        }
+    Assert.assertEquals(testResponse.responseHeaders, headers);
+  }
 
-        Assert.assertTrue(testResponse.statusCode == 200);
-        Assert.assertEquals(testResponse.responseBody, "{\"message\":\"success\"}");
-        Map<String,String> headers = new HashMap<String,String>();
-        for(Header h:mockedHeaders){
-           headers.put(h.getName(), h.getValue());
-        }
-        Assert.assertEquals(testResponse.responseHeaders, headers);
-    }    
+  public void testMethod(Method method, int statusCode) {
+    Response testResponse = new Response();
+    Request request = new Request(); 
+    Header[] mockedHeaders = null;
+    try {
+      when(statusline.getStatusCode()).thenReturn(statusCode);
+      when(response.getStatusLine()).thenReturn(statusline);
+      when(response.getEntity()).thenReturn(
+          new InputStreamEntity(
+            new ByteArrayInputStream(
+              "{\"message\":\"success\"}".getBytes())));
+      mockedHeaders = new Header[] { new BasicHeader("headerA", "valueA") };
+      when(response.getAllHeaders()).thenReturn(mockedHeaders);
+      when(httpClient.execute(Matchers.any(HttpGet.class))).thenReturn(response);
+      request.method = method;
+      if ((method == Method.POST) || (method == Method.PATCH) || (method == Method.PUT)) {
+        request.requestBody = "{\"test\":\"testResult\"}";
+      }
+      request.endpoint = "/test";
+      Map<String,String> requestHeaders = new HashMap<String, String>();
+      requestHeaders.put("Authorization", "Bearer XXXX");
+      requestHeaders.put("Content-Type", "application/json");
+      request.requestHeaders = requestHeaders;
+      Client client = new Client(httpClient);
+      testResponse = client.get(request);
+    } catch (URISyntaxException | IOException ex) {
+      StringWriter errors = new StringWriter();
+      ex.printStackTrace(new PrintWriter(errors));
+      Assert.assertTrue(errors.toString(), false);
+    }
+
+    Assert.assertTrue(testResponse.statusCode == statusCode);
+    if (method != Method.DELETE) {
+      Assert.assertEquals(testResponse.responseBody, "{\"message\":\"success\"}");
+    }
+    Assert.assertEquals(testResponse.responseBody, "{\"message\":\"success\"}");
+    Map<String,String> headers = new HashMap<String,String>();
+    for (Header h:mockedHeaders) {
+      headers.put(h.getName(), h.getValue());
+    }
+    Assert.assertEquals(testResponse.responseHeaders, headers);
+  }
+  
+  @Test
+  public void testGet() {
+    testMethod(Method.GET, 200);
+  }   
+  
+  @Test
+  public void testPost() {
+    testMethod(Method.POST, 201);
+  }  
+  
+  @Test
+  public void testPatch() {
+    testMethod(Method.PATCH, 200);
+  }    
+  
+  @Test
+  public void testPut() {
+    testMethod(Method.PUT, 200);
+  }   
+  
+  @Test
+  public void testDelete() {
+    testMethod(Method.DELETE, 204);
+  }     
 }
