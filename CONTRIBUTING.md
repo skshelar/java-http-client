@@ -144,7 +144,7 @@ Run the test:
 
 Generally, we follow the style guidelines as suggested by the official language. However, we ask that you conform to the styles that already exist in the library. If you wish to deviate, please explain your reasoning.
 
-Please run your code through [FindBugs](http://findbugs.sourceforge.net/) and [CheckStyle](http://checkstyle.sourceforge.net/) with[Google's Java Style Guide](http://checkstyle.sourceforge.net/reports/google-java-style.html).
+Please run your code through [FindBugs](http://findbugs.sourceforge.net/) and [CheckStyle](http://checkstyle.sourceforge.net/) with [Google's Java Style Guide](http://checkstyle.sourceforge.net/reports/google-java-style.html).
 
 ### Directory Structure
 
