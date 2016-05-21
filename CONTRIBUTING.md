@@ -88,14 +88,12 @@ source ./sendgrid.env
 
 ```bash
 ./gradelew build
-cd ../examples
+cd examples
 javac -classpath ./commons-logging-1.2.jar:./httpcore-4.4.4.jar:./httpclient-4.5.2.jar:./jackson-databind-2.7.3.jar:./jackson-annotations-2.7.0.jar:./jackson-core-2.7.3.jar:../target/http-1.0-SNAPSHOT.jar:. Example.java && java -classpath ./commons-logging-1.2.jar:./httpcore-4.4.4.jar:./httpclient-4.5.2.jar:./jackson-databind-2.7.3.jar:./jackson-annotations-2.7.0.jar:./jackson-core-2.7.3.jar:../target/http-1.0-SNAPSHOT.jar:. Example
 ```
 
 <a name="understanding_the_codebase"></a>
 ## Understanding the Code Base
-
-<!---optionally provide a brief summary explaning the architecture of the code--->
 
 **/examples**
 
