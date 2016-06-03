@@ -39,14 +39,14 @@ import java.util.Scanner;
 public class Client {
 
   private CloseableHttpClient httpClient;
-  
+
   /**
   * Constructor for using the default CloseableHttpClient.
   */
   public Client() {
     this.httpClient = HttpClients.createDefault();
   }
-  
+
   /**
   * Constructor for passing in an httpClient for mocking.
   *
@@ -55,7 +55,7 @@ public class Client {
   public Client(CloseableHttpClient httpClient) {
     this.httpClient = httpClient;
   }
-  
+
   /**
     * Add query parameters to a URL.
     *
@@ -67,22 +67,22 @@ public class Client {
       throws URISyntaxException {
     URIBuilder builder = new URIBuilder();
     URI uri;
-    
+
     builder.setScheme("https");
-    builder.setHost(baseUri); 
-    builder.setPath(endpoint);          
+    builder.setHost(baseUri);
+    builder.setPath(endpoint);
     if (queryParams != null) {
       for (Map.Entry<String, String> entry : queryParams.entrySet()) {
         builder.setParameter(entry.getKey(), entry.getValue());
-      }   
+      }
     }
-    
+
     try {
       uri = builder.build();
     } catch (URISyntaxException ex) {
       throw ex;
     }
-    
+
     return uri;
   }
 
@@ -94,24 +94,24 @@ public class Client {
   public Response getResponse(CloseableHttpResponse response) throws IOException {
     ResponseHandler<String> handler = new BasicResponseHandler();
     String responseBody = "";
-    
+
     int statusCode = response.getStatusLine().getStatusCode();
-    
+
     try {
       responseBody = handler.handleResponse(response);
     } catch (IOException ex) {
       throw ex;
     }
-    
+
     Header[] headers = response.getAllHeaders();
     Map<String,String> responseHeaders = new HashMap<String,String>();
     for (Header h:headers) {
       responseHeaders.put(h.getName(), h.getValue());
     }
-    
+
     return new Response(statusCode, responseBody, responseHeaders);
   }
-  
+
   /**
     * Make a GET request and provide the status code, response body and response headers.
     */
@@ -120,21 +120,21 @@ public class Client {
     Response response = new Response();
     URI uri = null;
     HttpGet httpGet = null;
-    
+
     try {
       uri = buildUri(request.baseUri, request.endpoint, request.queryParams);
-      httpGet = new HttpGet(uri.toString()); 
+      httpGet = new HttpGet(uri.toString());
     } catch (URISyntaxException ex) {
       throw ex;
     }
-    
-    if (request.requestHeaders != null) {
-      for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
+
+    if (request.headers != null) {
+      for (Map.Entry<String, String> entry : request.headers.entrySet()) {
         httpGet.setHeader(entry.getKey(), entry.getValue());
-      }            
+      }
     }
-    
-    
+
+
     try {
       serverResponse = httpClient.execute(httpGet);
       response = getResponse(serverResponse);
@@ -145,10 +145,10 @@ public class Client {
         serverResponse.close();
       }
     }
-    
+
     return response;
   }
-  
+
   /**
     * Make a POST request and provide the status code, response body and response headers.
     */
@@ -157,26 +157,26 @@ public class Client {
     Response response = new Response();
     URI uri = null;
     HttpPost httpPost = null;
-    
+
     try {
       uri = buildUri(request.baseUri, request.endpoint, request.queryParams);
-      httpPost = new HttpPost(uri.toString()); 
+      httpPost = new HttpPost(uri.toString());
     } catch (URISyntaxException ex) {
       throw ex;
     }
-    
-    if (request.requestHeaders != null) {
-      for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
+
+    if (request.headers != null) {
+      for (Map.Entry<String, String> entry : request.headers.entrySet()) {
         httpPost.setHeader(entry.getKey(), entry.getValue());
-      }            
+      }
     }
-    
+
     try {
-      httpPost.setEntity(new StringEntity(request.requestBody));
+      httpPost.setEntity(new StringEntity(request.body));
     } catch (IOException ex) {
       throw ex;
     }
-    
+
     try {
       serverResponse = httpClient.execute(httpPost);
       response = getResponse(serverResponse);
@@ -188,38 +188,38 @@ public class Client {
         serverResponse.close();
       }
     }
-    
+
     return response;
   }
 
   /**
     * Make a PATCH request and provide the status code, response body and response headers.
-    */    
+    */
   public Response patch(Request request) throws URISyntaxException, IOException {
     CloseableHttpResponse serverResponse = null;
     Response response = new Response();
     URI uri = null;
     HttpPatch httpPatch = null;
-    
+
     try {
       uri = buildUri(request.baseUri, request.endpoint, request.queryParams);
-      httpPatch = new HttpPatch(uri.toString()); 
+      httpPatch = new HttpPatch(uri.toString());
     } catch (URISyntaxException ex) {
       throw ex;
     }
-    
-    if (request.requestHeaders != null) {
-      for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
+
+    if (request.headers != null) {
+      for (Map.Entry<String, String> entry : request.headers.entrySet()) {
         httpPatch.setHeader(entry.getKey(), entry.getValue());
-      }            
+      }
     }
-    
+
     try {
-      httpPatch.setEntity(new StringEntity(request.requestBody));
+      httpPatch.setEntity(new StringEntity(request.body));
     } catch (IOException ex) {
       throw ex;
     }
-    
+
     try {
       serverResponse = httpClient.execute(httpPatch);
       response = getResponse(serverResponse);
@@ -231,7 +231,7 @@ public class Client {
         serverResponse.close();
       }
     }
-    
+
     return response;
   }
 
@@ -243,27 +243,27 @@ public class Client {
     Response response = new Response();
     URI uri = null;
     HttpPut httpPut = null;
-    
+
     try {
       uri = buildUri(request.baseUri, request.endpoint, request.queryParams);
-      httpPut = new HttpPut(uri.toString()); 
+      httpPut = new HttpPut(uri.toString());
     } catch (URISyntaxException ex) {
       throw ex;
     }
-    
-    if (request.requestHeaders != null) {
-      for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
+
+    if (request.headers != null) {
+      for (Map.Entry<String, String> entry : request.headers.entrySet()) {
         httpPut.setHeader(entry.getKey(), entry.getValue());
-      }            
+      }
     }
-    
-    
+
+
     try {
-      httpPut.setEntity(new StringEntity(request.requestBody));
+      httpPut.setEntity(new StringEntity(request.body));
     } catch (IOException ex) {
       throw ex;
     }
-    
+
     try {
       serverResponse = httpClient.execute(httpPut);
       response = getResponse(serverResponse);
@@ -275,7 +275,7 @@ public class Client {
         serverResponse.close();
       }
     }
-    
+
     return response;
   }
 
@@ -287,20 +287,20 @@ public class Client {
     Response response = new Response();
     URI uri = null;
     HttpDelete httpDelete = null;
-    
+
     try {
       uri = buildUri(request.baseUri, request.endpoint, request.queryParams);
-      httpDelete = new HttpDelete(uri.toString()); 
+      httpDelete = new HttpDelete(uri.toString());
     } catch (URISyntaxException ex) {
       throw ex;
     }
-    
-    if (request.requestHeaders != null) {
-      for (Map.Entry<String, String> entry : request.requestHeaders.entrySet()) {
+
+    if (request.headers != null) {
+      for (Map.Entry<String, String> entry : request.headers.entrySet()) {
         httpDelete.setHeader(entry.getKey(), entry.getValue());
-      }            
+      }
     }
-    
+
     try {
       serverResponse = httpClient.execute(httpDelete);
       response = getResponse(serverResponse);
@@ -312,10 +312,10 @@ public class Client {
         serverResponse.close();
       }
     }
-    
+
     return response;
   }
-  
+
   /**
     * A thin wrapper around the HTTP methods.
     */
@@ -325,15 +325,15 @@ public class Client {
         throw new IOException("We only support GET, PUT, PATCH, POST and DELETE.");
       }
       switch (request.method) {
-        case GET:  
+        case GET:
           return get(request);
-        case POST:  
+        case POST:
           return post(request);
-        case PUT:  
+        case PUT:
           return put(request);
         case PATCH:
           return patch(request);
-        case DELETE:  
+        case DELETE:
           return delete(request);
         default:
           throw new IOException("We only support GET, PUT, PATCH, POST and DELETE.");
