@@ -61,8 +61,8 @@ request.endpoint = "/your/api/" + param + "/call";
 try {
     Response response = client.api(request);
     System.out.println(response.statusCode);
-    System.out.println(response.responseBody);
-    System.out.println(response.responseHeaders);
+    System.out.println(response.body);
+    System.out.println(response.headers);
 } catch (IOException ex) {
     throw ex;
 }
@@ -74,12 +74,12 @@ try {
 Map<String,String> requestHeaders = new HashMap<String, String>();
 requestHeaders.put("Authorization", "Bearer " + System.getenv("SENDGRID_API_KEY"));
 requestHeaders.put("Content-Type", "application/json");
-request.requestHeaders = requestHeaders;
+request.headers = requestHeaders;
 Map<String,String> queryParams = new HashMap<String, String>();
 queryParams.put("limit", "100");
 queryParams.put("offset", "0");
 request.queryParams = queryParams;
-request.requestBody ="{\"name\": \"My Request Body\"}";
+request.body ="{\"name\": \"My Request Body\"}";
 request.method = Method.POST;
 String param = "param";
 request.endpoint = "/your/api/" + param + "/call";
@@ -87,8 +87,8 @@ request.endpoint = "/your/api/" + param + "/call";
 try {
     Response response = client.api(request);
     System.out.println(response.statusCode);
-    System.out.println(response.responseBody);
-    System.out.println(response.responseHeaders);
+    System.out.println(response.body);
+    System.out.println(response.headers);
 } catch (IOException ex) {
     throw ex;
 }
@@ -111,7 +111,7 @@ source ./sendgrid.env
 ```bash
 mvn package
 cd examples
-javac -classpath ./jackson-databind-2.7.3.jar:./jackson-annotations-2.7.0.jar:./jackson-core-2.7.3.jar:/{path_to}/java-http-client-1.0.0-jar.jar:. Example.java && java -classpath ./jackson-databind-2.7.3.jar:./jackson-annotations-2.7.0.jar:./jackson-core-2.7.3.jar:/{path_to}/java-http-client-1.0.0-jar.jar:. Example
+javac -classpath ./jackson-databind-2.7.3.jar:./jackson-annotations-2.7.0.jar:./jackson-core-2.7.3.jar:/{path_to}/java-http-client-2.0.0-jar.jar:. Example.java && java -classpath ./jackson-databind-2.7.3.jar:./jackson-annotations-2.7.0.jar:./jackson-core-2.7.3.jar:/{path_to}/java-http-client-2.0.0-jar.jar:. Example
 ```
 
 ## Roadmap

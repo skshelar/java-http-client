@@ -39,12 +39,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ClientTest extends Mockito {
-  
+
   private CloseableHttpClient httpClient;
   private CloseableHttpResponse response;
   private HttpEntity entity;
   private StatusLine statusline;
-  
+
   @Before
   public void setUp() throws Exception {
     this.httpClient = mock(CloseableHttpClient.class);
@@ -52,7 +52,7 @@ public class ClientTest extends Mockito {
     this.entity = mock(HttpEntity.class);
     this.statusline = mock(StatusLine.class);
   }
-  
+
   @Test
   public void testbuildUri() {
     Client client = new Client();
@@ -69,13 +69,13 @@ public class ClientTest extends Mockito {
       ex.printStackTrace(new PrintWriter(errors));
       Assert.assertTrue(errors.toString(), false);
     }
-    
+
     String url = uri.toString();
     System.out.println(url);
     Assert.assertTrue(url.equals("https://api.test.com/endpoint?test2=2&test1=1") ||
            url.equals("https://api.test.com/endpoint?test1=1&test2=2"));
   }
-  
+
   @Test
   public void testGetResponse() {
     Client client = new Client();
@@ -94,7 +94,7 @@ public class ClientTest extends Mockito {
       HttpGet httpGet = new HttpGet("https://api.test.com");
       CloseableHttpResponse resp = httpClient.execute(httpGet);
       testResponse = client.getResponse(resp);
-      resp.close();           
+      resp.close();
     } catch (IOException ex) {
       StringWriter errors = new StringWriter();
       ex.printStackTrace(new PrintWriter(errors));
@@ -102,17 +102,17 @@ public class ClientTest extends Mockito {
     }
 
     Assert.assertTrue(testResponse.statusCode == 200);
-    Assert.assertEquals(testResponse.responseBody, "{\"message\":\"success\"}");
+    Assert.assertEquals(testResponse.body, "{\"message\":\"success\"}");
     Map<String,String> headers = new HashMap<String,String>();
     for (Header h:mockedHeaders) {
       headers.put(h.getName(), h.getValue());
     }
-    Assert.assertEquals(testResponse.responseHeaders, headers);
+    Assert.assertEquals(testResponse.headers, headers);
   }
 
   public void testMethod(Method method, int statusCode) {
     Response testResponse = new Response();
-    Request request = new Request(); 
+    Request request = new Request();
     Header[] mockedHeaders = null;
     try {
       when(statusline.getStatusCode()).thenReturn(statusCode);
@@ -126,13 +126,13 @@ public class ClientTest extends Mockito {
       when(httpClient.execute(Matchers.any(HttpGet.class))).thenReturn(response);
       request.method = method;
       if ((method == Method.POST) || (method == Method.PATCH) || (method == Method.PUT)) {
-        request.requestBody = "{\"test\":\"testResult\"}";
+        request.body = "{\"test\":\"testResult\"}";
       }
       request.endpoint = "/test";
       Map<String,String> requestHeaders = new HashMap<String, String>();
       requestHeaders.put("Authorization", "Bearer XXXX");
       requestHeaders.put("Content-Type", "application/json");
-      request.requestHeaders = requestHeaders;
+      request.headers = requestHeaders;
       Client client = new Client(httpClient);
       testResponse = client.get(request);
     } catch (URISyntaxException | IOException ex) {
@@ -143,38 +143,38 @@ public class ClientTest extends Mockito {
 
     Assert.assertTrue(testResponse.statusCode == statusCode);
     if (method != Method.DELETE) {
-      Assert.assertEquals(testResponse.responseBody, "{\"message\":\"success\"}");
+      Assert.assertEquals(testResponse.body, "{\"message\":\"success\"}");
     }
-    Assert.assertEquals(testResponse.responseBody, "{\"message\":\"success\"}");
+    Assert.assertEquals(testResponse.body, "{\"message\":\"success\"}");
     Map<String,String> headers = new HashMap<String,String>();
     for (Header h:mockedHeaders) {
       headers.put(h.getName(), h.getValue());
     }
-    Assert.assertEquals(testResponse.responseHeaders, headers);
+    Assert.assertEquals(testResponse.headers, headers);
   }
-  
+
   @Test
   public void testGet() {
     testMethod(Method.GET, 200);
-  }   
-  
+  }
+
   @Test
   public void testPost() {
     testMethod(Method.POST, 201);
-  }  
-  
+  }
+
   @Test
   public void testPatch() {
     testMethod(Method.PATCH, 200);
-  }    
-  
+  }
+
   @Test
   public void testPut() {
     testMethod(Method.PUT, 200);
-  }   
-  
+  }
+
   @Test
   public void testDelete() {
     testMethod(Method.DELETE, 204);
-  }     
+  }
 }

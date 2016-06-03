@@ -8,29 +8,29 @@ import java.util.Map;
   */
 public class Response {
   public int statusCode;
-  public String responseBody;
-  public Map<String,String> responseHeaders;
+  public String body;
+  public Map<String,String> headers;
 
   /**
     * Set the API's response.
-    */ 
+    */
   public Response(int statusCode, String responseBody, Map<String,String> responseHeaders) {
     this.statusCode = statusCode;
-    this.responseBody = responseBody;
-    this.responseHeaders = responseHeaders;
+    this.body = responseBody;
+    this.headers = responseHeaders;
   }
-  
+
   public Response() {
     this.reset();
   }
-    
+
   /**
    * Place the object into an empty state.
    */
   public void reset() {
     this.statusCode = 0;
-    responseBody = "";
-    responseHeaders = null;    
+    this.body = "";
+    this.headers = null;
   }
 
 }
