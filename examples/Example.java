@@ -15,16 +15,16 @@ import java.util.Map;
 public class Example {
   public static void main(String[] args) throws IOException {
     Client client = new Client();
-    
+
     Request request = new Request();
     request.baseUri = "api.sendgrid.com";
     Map<String,String> requestHeaders = new HashMap<String, String>();
     requestHeaders.put("Authorization", "Bearer " + System.getenv("SENDGRID_API_KEY"));
     requestHeaders.put("Content-Type", "application/json");
-    request.requestHeaders = requestHeaders;
-    
+    request.headers = requestHeaders;
+
     Response response = new Response();
-    
+
     // GET Collection
     request.method = Method.GET;
     request.endpoint = "/v3/api_keys";
@@ -35,81 +35,81 @@ public class Example {
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
-      System.out.println(response.responseBody);
-      System.out.println(response.responseHeaders);
+      System.out.println(response.body);
+      System.out.println(response.headers);
     } catch (IOException ex) {
       throw ex;
     }
     request.queryParams = null;
-    
+
     // POST
     request.method = Method.POST;
     request.endpoint = "/v3/api_keys";
-    request.requestBody =
+    request.body =
         "{\"name\": \"My api Key\",\"scopes\": [\"mail.send\",\"alerts.create\",\"alerts.read\"]}";
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
-      System.out.println(response.responseBody);
-      System.out.println(response.responseHeaders);
+      System.out.println(response.body);
+      System.out.println(response.headers);
     } catch (IOException ex) {
       throw ex;
     }
     String apiKeyId = "";
     try {
       ObjectMapper mapper = new ObjectMapper();
-      JsonNode json = mapper.readTree(response.responseBody);
-      apiKeyId = json.path("api_key_id").asText(); 
+      JsonNode json = mapper.readTree(response.body);
+      apiKeyId = json.path("api_key_id").asText();
     } catch (IOException ex) {
       throw ex;
     }
-    request.requestBody = "";
-    
+    request.body = "";
+
     // GET Single
     request.method = Method.GET;
     request.endpoint = "/v3/api_keys/" + apiKeyId;
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
-      System.out.println(response.responseBody);
-      System.out.println(response.responseHeaders);
+      System.out.println(response.body);
+      System.out.println(response.headers);
     } catch (IOException ex) {
       throw ex;
     }
-    
+
     // PATCH
     request.method = Method.PATCH;
-    request.requestBody = "{\"name\": \"A New Hope\"}";
+    request.body = "{\"name\": \"A New Hope\"}";
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
-      System.out.println(response.responseBody);
-      System.out.println(response.responseHeaders);
+      System.out.println(response.body);
+      System.out.println(response.headers);
     } catch (IOException ex) {
       throw ex;
     }
-    request.requestBody = "";
-    
+    request.body = "";
+
     // PUT
     request.method = Method.PUT;
-    request.requestBody =
+    request.body =
           "{\"name\": \"A New Hope\",\"scopes\": [\"user.profile.read\",\"user.profile.update\"]}";
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
-      System.out.println(response.responseBody);
-      System.out.println(response.responseHeaders);
+      System.out.println(response.body);
+      System.out.println(response.headers);
     } catch (IOException ex) {
       throw ex;
     }
-    request.requestBody = "";
-    
+    request.body = "";
+
     // DELETE
     request.method = Method.DELETE;
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
-      System.out.println(response.responseHeaders);
+      System.out.println(response.headers);
     } catch (IOException ex) {
       throw ex;
     }
