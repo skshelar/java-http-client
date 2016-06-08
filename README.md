@@ -39,7 +39,7 @@ repositories {
 
 ## Fat Jar
 
-[Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/2.0.0/java-http-client-2.1.0-jar.jar)
+[Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/2.1.0/java-http-client-2.1.0-jar.jar)
 
 ## Dependencies
 
