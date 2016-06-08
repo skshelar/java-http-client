@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/sendgrid/java-http-client.svg?branch=master)](https://travis-ci.org/sendgrid/java-http-client) [![Maven](https://maven-badges.herokuapp.com/maven-central/com.sendgrid/java-http-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.sendgrid/java-http-client)
 
-**HTTP REST client, simplified for Java**
+**Quickly and easily access any RESTful or RESTful-like API.**
+
+If you are looking for the SendGrid API client library, please see [this repo](https://github.com/sendgrid/sendgrid-java).
 
 # Announcements
 
