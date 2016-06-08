@@ -16,7 +16,7 @@ All updates to this project is documented in our [CHANGELOG](https://github.com/
 ...
 dependencies {
   ...
-  compile 'com.sendgrid:java-http-client:2.0.0'
+  compile 'com.sendgrid:java-http-client:2.1.0'
 }
 
 repositories {
