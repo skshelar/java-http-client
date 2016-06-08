@@ -1,8 +1,10 @@
 package com.sendgrid;
 
 import org.apache.http.Header;
+import org.apache.http.annotation.NotThreadSafe;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPatch;
@@ -32,6 +34,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+// Hack to get DELETE to accept a request body
+@NotThreadSafe
+class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
+    public static final String METHOD_NAME = "DELETE";
+
+    public String getMethod() {
+        return METHOD_NAME;
+    }
+
+    public HttpDeleteWithBody(final String uri) {
+        super();
+        setURI(URI.create(uri));
+    }
+}
 
 /**
   * Class Client allows for quick and easy access any REST or REST-like API.
@@ -286,11 +303,11 @@ public class Client {
     CloseableHttpResponse serverResponse = null;
     Response response = new Response();
     URI uri = null;
-    HttpDelete httpDelete = null;
+    HttpDeleteWithBody httpDelete = null;
 
     try {
       uri = buildUri(request.baseUri, request.endpoint, request.queryParams);
-      httpDelete = new HttpDelete(uri.toString());
+      httpDelete = new HttpDeleteWithBody(uri.toString());
     } catch (URISyntaxException ex) {
       throw ex;
     }
@@ -299,6 +316,12 @@ public class Client {
       for (Map.Entry<String, String> entry : request.headers.entrySet()) {
         httpDelete.setHeader(entry.getKey(), entry.getValue());
       }
+    }
+
+    try {
+      httpDelete.setEntity(new StringEntity(request.body));
+    } catch (IOException ex) {
+      throw ex;
     }
 
     try {
