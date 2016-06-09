@@ -56,12 +56,14 @@ class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
 public class Client {
 
   private CloseableHttpClient httpClient;
+  private Boolean test;
 
   /**
   * Constructor for using the default CloseableHttpClient.
   */
   public Client() {
     this.httpClient = HttpClients.createDefault();
+    this.test = false;
   }
 
   /**
@@ -71,6 +73,16 @@ public class Client {
   */
   public Client(CloseableHttpClient httpClient) {
     this.httpClient = httpClient;
+    this.test = false;
+  }
+
+  /**
+  * Constructor for passing in a test parameter to allow for http calls
+  *
+  * @param test is a Bool
+  */
+  public Client(Boolean test) {
+    this.test = test;
   }
 
   /**
@@ -85,7 +97,12 @@ public class Client {
     URIBuilder builder = new URIBuilder();
     URI uri;
 
-    builder.setScheme("https");
+    if (this.test == true) {
+      builder.setScheme("http");
+    } else {
+      builder.setScheme("https");
+    }
+
     builder.setHost(baseUri);
     builder.setPath(endpoint);
     if (queryParams != null) {
