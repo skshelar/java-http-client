@@ -131,7 +131,6 @@ public class ClientTest extends Mockito {
       request.endpoint = "/test";
       Map<String,String> requestHeaders = new HashMap<String, String>();
       requestHeaders.put("Authorization", "Bearer XXXX");
-      requestHeaders.put("Content-Type", "application/json");
       request.headers = requestHeaders;
       Client client = new Client(httpClient);
       testResponse = client.get(request);

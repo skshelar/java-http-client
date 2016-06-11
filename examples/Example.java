@@ -20,7 +20,6 @@ public class Example {
     request.baseUri = "api.sendgrid.com";
     Map<String,String> requestHeaders = new HashMap<String, String>();
     requestHeaders.put("Authorization", "Bearer " + System.getenv("SENDGRID_API_KEY"));
-    requestHeaders.put("Content-Type", "application/json");
     request.headers = requestHeaders;
 
     Response response = new Response();

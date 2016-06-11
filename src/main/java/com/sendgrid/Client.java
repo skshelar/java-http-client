@@ -208,6 +208,9 @@ public class Client {
 
     try {
       httpPost.setEntity(new StringEntity(request.body));
+      if (request.body != "") {
+        httpPost.setHeader("Content-Type", "application/json");
+      }
     } catch (IOException ex) {
       throw ex;
     }
@@ -251,6 +254,9 @@ public class Client {
 
     try {
       httpPatch.setEntity(new StringEntity(request.body));
+      if (request.body != "") {
+        httpPatch.setHeader("Content-Type", "application/json");
+      }
     } catch (IOException ex) {
       throw ex;
     }
@@ -295,6 +301,9 @@ public class Client {
 
     try {
       httpPut.setEntity(new StringEntity(request.body));
+      if (request.body != "") {
+        httpPut.setHeader("Content-Type", "application/json");
+      }
     } catch (IOException ex) {
       throw ex;
     }
@@ -338,6 +347,9 @@ public class Client {
 
     try {
       httpDelete.setEntity(new StringEntity(request.body));
+      if (request.body != "") {
+        httpDelete.setHeader("Content-Type", "application/json");
+      }
     } catch (IOException ex) {
       throw ex;
     }

@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2016-06-10
+### Added
+- Automatically add Content-Type: application/json when there is a request body
+
 ## [2.2.1] - 2016-06-08
 ### Fixed
 - Set client properly when testing
