@@ -16,7 +16,7 @@ All updates to this project is documented in our [CHANGELOG](https://github.com/
 ...
 dependencies {
   ...
-  compile 'com.sendgrid:java-http-client:2.2.0'
+  compile 'com.sendgrid:java-http-client:2.2.1'
 }
 
 repositories {
@@ -31,7 +31,7 @@ repositories {
 <dependency>
     <groupId>com.sendgrid</groupId>
     <artifactId>java-http-client</artifactId>
-    <version>2.2.0</version>
+    <version>2.2.1</version>
 </dependency>
 ```
 
@@ -39,7 +39,7 @@ repositories {
 
 ## Fat Jar
 
-[Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/2.2.0/java-http-client-2.2.0-jar.jar)
+[Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/2.2.1/java-http-client-2.2.1-jar.jar)
 
 ## Dependencies
 
@@ -113,7 +113,7 @@ source ./sendgrid.env
 ```bash
 mvn package
 cd examples
-javac -classpath ./jackson-databind-2.7.3.jar:./jackson-annotations-2.7.0.jar:./jackson-core-2.7.3.jar:/{path_to}/java-http-client-2.0.0-jar.jar:. Example.java && java -classpath ./jackson-databind-2.7.3.jar:./jackson-annotations-2.7.0.jar:./jackson-core-2.7.3.jar:/{path_to}/java-http-client-2.0.0-jar.jar:. Example
+javac -classpath ./jackson-databind-2.7.3.jar:./jackson-annotations-2.7.0.jar:./jackson-core-2.7.3.jar:/{path_to}/java-http-client-2.2.1-jar.jar:. Example.java && java -classpath ./jackson-databind-2.7.3.jar:./jackson-annotations-2.7.0.jar:./jackson-core-2.7.3.jar:/{path_to}/java-http-client-2.2.1-jar.jar:. Example
 ```
 
 ## Roadmap

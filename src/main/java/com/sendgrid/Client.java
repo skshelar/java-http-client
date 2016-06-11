@@ -82,6 +82,7 @@ public class Client {
   * @param test is a Bool
   */
   public Client(Boolean test) {
+    this.httpClient = HttpClients.createDefault();
     this.test = test;
   }
 
@@ -105,6 +106,7 @@ public class Client {
 
     builder.setHost(baseUri);
     builder.setPath(endpoint);
+
     if (queryParams != null) {
       for (Map.Entry<String, String> entry : queryParams.entrySet()) {
         builder.setParameter(entry.getKey(), entry.getValue());
@@ -167,7 +169,6 @@ public class Client {
         httpGet.setHeader(entry.getKey(), entry.getValue());
       }
     }
-
 
     try {
       serverResponse = httpClient.execute(httpGet);
