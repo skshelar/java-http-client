@@ -16,7 +16,7 @@ env:
 notifications:
   hipchat:
     rooms:
-      secure: kJyc36IRkovqK3JuMXJuBBkDFkDfZ9iAE8ZziszzL9zNsfY2fAQWDk4bMrFO0yYW9OwRXl0gT97HVYWBZFDhjtstUJxit0lpUB+TNIDw2lqCkOIPxGKgcBB9mDS795QyLJzletObP/guPxbzSNOGLa6+k4GbTtTMXRhjzN6lF0o=
+      secure: j/23RY7nDWHMrpIcZiiwH3ORsWnmkZrMWKfv761RnJviYBQJy1cDEmvsyZy5w2AlE1w+CLNm+G7SI35N2eKZqtked+pWcx3nBN+bVmt7uRXmj16Oc5x2ztX6QWs3xFtUfGiA8t17q/LGRZlw9SiNI+SbP2wBHDJl66+KZWTppjbcmz/Rdax2OKj843Zx92bqsdAOjsdfwFm3B4isHQjE6hoS9u0MtIQ4KpkX4xOTJSF/r0RpIYWI37E41dDmdjLWIsYnj01P9dI+IQLN5OIfsaVQGWLVV9YkHjsEzOspJHBz8Mf40ADY76Exm/V+phRS2Q4tmAsAPXQ9lchS3uooat9z3RlfSxfIhVbjxTDLN7E/PMXCYAMKRU2FUqDYQoX3qSZBT9717Agz84T15S7l4g009bzzTgoHVpJjHVhNCRR1hWfaWFj7oRi8s0BDhQCclZ0ug+s//29LQWViSOvK7/prhJJwqDOD+GciVE4VDe1NFj7vhDTuIoWYU87D8zuZadLMz2jz1w67Oa1jJ1Ok64iFTqBS9AKQAfPKeQq9dZQ4SKMlS1Zyr8Y013ebp8CG01I8TZYQiBdbyhzYkAVSaz4x+Qh3n6WPJLJA0FUuQFcn3p1UQS/I16U2253F7w5t+7wU2DMj8k8k7ZN373FZc1ZWngX5ljR6nMoJNR73opg=
     template:
     - '<a href="https://travis-ci.org/sendgrid/%{repository}/builds/%{build_id}">%{repository}
       Build %{build_number}</a> on branch <i>%{branch}</i> by %{author}: <strong>%{message}</strong>
