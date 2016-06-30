@@ -15,3 +15,7 @@ build/
 gradle.properties
 .gradle
 repo/
+
+# JetBrains IDEs
+*.iml
+**/.idea/
