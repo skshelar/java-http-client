@@ -30,6 +30,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -206,13 +207,9 @@ public class Client {
       }
     }
 
-    try {
-      httpPost.setEntity(new StringEntity(request.body));
-      if (request.body != "") {
-        httpPost.setHeader("Content-Type", "application/json");
-      }
-    } catch (IOException ex) {
-      throw ex;
+    httpPost.setEntity(new StringEntity(request.body, Charset.forName("UTF-8")));
+    if (request.body != "") {
+      httpPost.setHeader("Content-Type", "application/json");
     }
 
     try {
@@ -252,13 +249,9 @@ public class Client {
       }
     }
 
-    try {
-      httpPatch.setEntity(new StringEntity(request.body));
-      if (request.body != "") {
-        httpPatch.setHeader("Content-Type", "application/json");
-      }
-    } catch (IOException ex) {
-      throw ex;
+    httpPatch.setEntity(new StringEntity(request.body, Charset.forName("UTF-8")));
+    if (request.body != "") {
+      httpPatch.setHeader("Content-Type", "application/json");
     }
 
     try {
@@ -299,13 +292,9 @@ public class Client {
     }
 
 
-    try {
-      httpPut.setEntity(new StringEntity(request.body));
-      if (request.body != "") {
-        httpPut.setHeader("Content-Type", "application/json");
-      }
-    } catch (IOException ex) {
-      throw ex;
+    httpPut.setEntity(new StringEntity(request.body, Charset.forName("UTF-8")));
+    if (request.body != "") {
+      httpPut.setHeader("Content-Type", "application/json");
     }
 
     try {
@@ -345,13 +334,9 @@ public class Client {
       }
     }
 
-    try {
-      httpDelete.setEntity(new StringEntity(request.body));
-      if (request.body != "") {
-        httpDelete.setHeader("Content-Type", "application/json");
-      }
-    } catch (IOException ex) {
-      throw ex;
+    httpDelete.setEntity(new StringEntity(request.body, Charset.forName("UTF-8")));
+    if (request.body != "") {
+      httpDelete.setHeader("Content-Type", "application/json");
     }
 
     try {
