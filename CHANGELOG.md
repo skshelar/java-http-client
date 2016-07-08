@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.1] - 2016-07-08
+### Fixed
+- [Fix charset: Use "UTF-8" charset instead of default "ISO-8859-1"](https://github.com/sendgrid/java-http-client/pull/5)
+- Thanks [DanailMinchev](https://github.com/DanailMinchev)!
+
 ## [2.3.0] - 2016-06-10
 ### Added
 - Automatically add Content-Type: application/json when there is a request body
