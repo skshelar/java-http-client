@@ -2,7 +2,6 @@ package com.sendgrid;
 
 import org.apache.http.Header;
 import org.apache.http.annotation.NotThreadSafe;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpDelete;
@@ -31,10 +30,12 @@ import java.net.URISyntaxException;
 import java.net.URLEncoder;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import org.apache.http.util.EntityUtils;
 
 // Hack to get DELETE to accept a request body
 @NotThreadSafe
@@ -129,13 +130,12 @@ public class Client {
     * @param response from a call to a CloseableHttpClient
     */
   public Response getResponse(CloseableHttpResponse response) throws IOException {
-    ResponseHandler<String> handler = new BasicResponseHandler();
     String responseBody = "";
 
     int statusCode = response.getStatusLine().getStatusCode();
 
     try {
-      responseBody = handler.handleResponse(response);
+      responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
     } catch (IOException ex) {
       throw ex;
     }
