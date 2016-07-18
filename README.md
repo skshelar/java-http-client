@@ -16,7 +16,7 @@ All updates to this project is documented in our [CHANGELOG](https://github.com/
 ...
 dependencies {
   ...
-  compile 'com.sendgrid:java-http-client:2.3.1'
+  compile 'com.sendgrid:java-http-client:2.3.2'
 }
 
 repositories {
@@ -31,7 +31,7 @@ repositories {
 <dependency>
     <groupId>com.sendgrid</groupId>
     <artifactId>java-http-client</artifactId>
-    <version>2.3.1</version>
+    <version>2.3.2</version>
 </dependency>
 ```
 
@@ -39,7 +39,7 @@ repositories {
 
 ## Fat Jar
 
-[Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/2.3.1/java-http-client-2.3.1-jar.jar)
+[Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/2.3.2/java-http-client-2.3.2-jar.jar)
 
 ## Dependencies
 

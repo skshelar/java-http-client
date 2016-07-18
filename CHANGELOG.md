@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.2] - 2016-07-18
+### Fixed
+- 2.3.1 did not upload correctly
+
 ## [2.3.1] - 2016-07-08
 ### Fixed
 - [Fix charset: Use "UTF-8" charset instead of default "ISO-8859-1"](https://github.com/sendgrid/java-http-client/pull/5)
