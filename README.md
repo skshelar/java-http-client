@@ -10,7 +10,11 @@ All updates to this project is documented in our [CHANGELOG](https://github.com/
 
 # Installation
 
-## via Maven w/ Gradle
+## Prerequisites
+
+- Java version Oracle JDK 7, 8 or OpenJDK 7
+
+## Install via Maven w/ Gradle
 
 ```groovy
 ...
@@ -25,7 +29,7 @@ repositories {
 ...
 ```
 
-## Maven
+### Maven
 
 ```xml
 <dependency>
@@ -37,7 +41,7 @@ repositories {
 
 `mvn install`
 
-## Fat Jar
+## Install via Fat Jar
 
 [Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/2.3.2/java-http-client-2.3.2-jar.jar)
 

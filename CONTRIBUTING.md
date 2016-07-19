@@ -64,7 +64,7 @@ We welcome direct contributions to the java-http-client code base. Thank you!
 
 ##### Prerequisites #####
 
-- Java 1.7 and up
+- Java version Oracle JDK 7, 8 or OpenJDK 7
 - Please see [build.gradle](https://github.com/sendgrid/java-http-client/blob/master/build.gradle)
 
 ##### Initial setup: #####
