@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.http.Header;
+import org.apache.http.StatusLine;
 import org.apache.http.annotation.NotThreadSafe;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
@@ -19,6 +19,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -143,8 +144,6 @@ public class Client {
 	 * response headers.
 	 */
 	public Response get(Request request) throws URISyntaxException, IOException {
-		CloseableHttpResponse serverResponse = null;
-		Response response = new Response();
 		URI uri = null;
 		HttpGet httpGet = null;
 
@@ -160,19 +159,7 @@ public class Client {
 				httpGet.setHeader(entry.getKey(), entry.getValue());
 			}
 		}
-
-		try {
-			serverResponse = httpClient.execute(httpGet);
-			response = getResponse(serverResponse);
-		} catch (IOException ex) {
-			throw ex;
-		} finally {
-			if (serverResponse != null) {
-				serverResponse.close();
-			}
-		}
-
-		return response;
+		return executeApiCall(httpGet);
 	}
 
 	/**
@@ -180,8 +167,6 @@ public class Client {
 	 * response headers.
 	 */
 	public Response post(Request request) throws URISyntaxException, IOException {
-		CloseableHttpResponse serverResponse = null;
-		Response response = new Response();
 		URI uri = null;
 		HttpPost httpPost = null;
 
@@ -203,19 +188,7 @@ public class Client {
 			httpPost.setHeader("Content-Type", "application/json");
 		}
 
-		try {
-			serverResponse = httpClient.execute(httpPost);
-			response = getResponse(serverResponse);
-			serverResponse.close();
-		} catch (IOException ex) {
-			throw ex;
-		} finally {
-			if (serverResponse != null) {
-				serverResponse.close();
-			}
-		}
-
-		return response;
+		return executeApiCall(httpPost);
 	}
 
 	/**
@@ -223,8 +196,6 @@ public class Client {
 	 * response headers.
 	 */
 	public Response patch(Request request) throws URISyntaxException, IOException {
-		CloseableHttpResponse serverResponse = null;
-		Response response = new Response();
 		URI uri = null;
 		HttpPatch httpPatch = null;
 
@@ -245,20 +216,7 @@ public class Client {
 		if (request.body != "") {
 			httpPatch.setHeader("Content-Type", "application/json");
 		}
-
-		try {
-			serverResponse = httpClient.execute(httpPatch);
-			response = getResponse(serverResponse);
-			serverResponse.close();
-		} catch (IOException ex) {
-			throw ex;
-		} finally {
-			if (serverResponse != null) {
-				serverResponse.close();
-			}
-		}
-
-		return response;
+		return executeApiCall(httpPatch);
 	}
 
 	/**
@@ -266,8 +224,6 @@ public class Client {
 	 * response headers.
 	 */
 	public Response put(Request request) throws URISyntaxException, IOException {
-		CloseableHttpResponse serverResponse = null;
-		Response response = new Response();
 		URI uri = null;
 		HttpPut httpPut = null;
 
@@ -289,27 +245,13 @@ public class Client {
 			httpPut.setHeader("Content-Type", "application/json");
 		}
 
-		try {
-			serverResponse = httpClient.execute(httpPut);
-			response = getResponse(serverResponse);
-			serverResponse.close();
-		} catch (IOException ex) {
-			throw ex;
-		} finally {
-			if (serverResponse != null) {
-				serverResponse.close();
-			}
-		}
-
-		return response;
+		return executeApiCall(httpPut);
 	}
 
 	/**
 	 * Make a DELETE request and provide the status code and response headers.
 	 */
 	public Response delete(Request request) throws URISyntaxException, IOException {
-		CloseableHttpResponse serverResponse = null;
-		Response response = new Response();
 		URI uri = null;
 		HttpDeleteWithBody httpDelete = null;
 
@@ -331,18 +273,26 @@ public class Client {
 			httpDelete.setHeader("Content-Type", "application/json");
 		}
 
+		return executeApiCall(httpDelete);
+	}
+
+	private Response executeApiCall(HttpRequestBase httpPost) throws IOException {
+		CloseableHttpResponse serverResponse = null;
+		Response response = new Response();
 		try {
-			serverResponse = httpClient.execute(httpDelete);
+			serverResponse = httpClient.execute(httpPost);
 			response = getResponse(serverResponse);
-			serverResponse.close();
-		} catch (IOException ex) {
-			throw ex;
+			final StatusLine statusLine = serverResponse.getStatusLine();
+			if(statusLine.getStatusCode()>=300){
+				//throwing IOException here to not break API behavior.
+				throw new IOException("Request returned status Code "+statusLine.getStatusCode()+"Body:"+(response!=null?response.body:null));
+			}
+	
 		} finally {
 			if (serverResponse != null) {
 				serverResponse.close();
 			}
 		}
-
 		return response;
 	}
 
