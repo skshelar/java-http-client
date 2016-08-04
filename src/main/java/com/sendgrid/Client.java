@@ -135,7 +135,9 @@ public class Client {
     int statusCode = response.getStatusLine().getStatusCode();
 
     try {
-      responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+        if(response.getEntity() != null) {
+          responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+        }
     } catch (IOException ex) {
       throw ex;
     }
