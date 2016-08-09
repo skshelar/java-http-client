@@ -7,6 +7,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.impl.client.AbstractResponseHandler;
 import org.apache.http.util.EntityUtils;
+import java.nio.charset.StandardCharsets;
 
 /**
  * A {@link org.apache.http.client.ResponseHandler} that returns the response body as a String
@@ -34,9 +35,9 @@ public class SendGridResponseHandler extends AbstractResponseHandler<String>{
         return entity == null ? null : handleEntity(entity);
     }
 	
-	@Override
-	public String handleEntity(HttpEntity entity) throws IOException {
-		 return EntityUtils.toString(entity);
-	}
+    @Override
+    public String handleEntity(HttpEntity entity) throws IOException {
+        return EntityUtils.toString(entity, StandardCharsets.UTF_8);
+    }
 
 }
