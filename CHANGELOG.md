@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.4] - 2016-08-09
+### Fix
+- [Pull #7](https://github.com/sendgrid/java-http-client/pull/7): Fix Response Charset to UTF-8
+- Fixes [issue #6](https://github.com/sendgrid/java-http-client/issues/6): Multi-byte character got garbled on received mail
+- BIG thanks to [Yoichi Kikuta](https://github.com/kikutaro) for the pull request!
+
 ## [2.3.3] - 2016-08-08
 ### Added
 - Pull request [#11](https://github.com/sendgrid/java-http-client/pull/11)
