@@ -10,13 +10,17 @@ All updates to this project is documented in our [CHANGELOG](https://github.com/
 
 # Installation
 
-## via Maven w/ Gradle
+## Prerequisites
+
+- Java version Oracle JDK 7, 8 or OpenJDK 7
+
+## Install via Maven w/ Gradle
 
 ```groovy
 ...
 dependencies {
   ...
-  compile 'com.sendgrid:java-http-client:2.3.1'
+  compile 'com.sendgrid:java-http-client:2.3.3'
 }
 
 repositories {
@@ -25,21 +29,21 @@ repositories {
 ...
 ```
 
-## Maven
+### Maven
 
 ```xml
 <dependency>
     <groupId>com.sendgrid</groupId>
     <artifactId>java-http-client</artifactId>
-    <version>2.3.1</version>
+    <version>2.3.3</version>
 </dependency>
 ```
 
 `mvn install`
 
-## Fat Jar
+## Install via Fat Jar
 
-[Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/2.3.1/java-http-client-2.3.1-jar.jar)
+[Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/2.3.3/java-http-client-2.3.3-jar.jar)
 
 ## Dependencies
 

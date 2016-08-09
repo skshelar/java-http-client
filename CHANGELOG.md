@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.3] - 2016-08-08
+### Added
+- Pull request [#11](https://github.com/sendgrid/java-http-client/pull/11)
+- Solves [issue #10](https://github.com/sendgrid/java-http-client/issues/10): Improve Error Handling
+- Now error messages are passed through from the server
+- BIG thanks to [shuron](https://github.com/shuron) / [Alexander Holbreich](https://github.com/aholbreich) for the pull request!
+
+## [2.3.2] - 2016-07-18
+### Fixed
+- 2.3.1 did not upload correctly
+
 ## [2.3.1] - 2016-07-08
 ### Fixed
 - [Fix charset: Use "UTF-8" charset instead of default "ISO-8859-1"](https://github.com/sendgrid/java-http-client/pull/5)
