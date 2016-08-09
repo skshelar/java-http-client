@@ -116,7 +116,7 @@ source ./sendgrid.env
 ```bash
 mvn package
 cd examples
-javac -classpath ./{path_to}/java-http-client-2.3.4-jar.jar:. Example.java && java -classpath ./{path_to}/java-http-client-2.3.4-jar.jar:. Example
+javac -classpath {path_to}/sendgrid-java-http-client-2.3.4-jar.jar:. Example.java && java -classpath {path_to}/sendgrid-java-http-client-2.3.4-jar.jar:. Example
 ```
 
 ## Roadmap
