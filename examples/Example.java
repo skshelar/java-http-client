@@ -18,19 +18,15 @@ public class Example {
 
     Request request = new Request();
     request.baseUri = "api.sendgrid.com";
-    Map<String,String> requestHeaders = new HashMap<String, String>();
-    requestHeaders.put("Authorization", "Bearer " + System.getenv("SENDGRID_API_KEY"));
-    request.headers = requestHeaders;
+    request.getHeaders().put("Authorization", "Bearer " + System.getenv("SENDGRID_API_KEY"));
 
     Response response = new Response();
 
     // GET Collection
     request.method = Method.GET;
     request.endpoint = "/v3/api_keys";
-    Map<String,String> queryParams = new HashMap<String, String>();
-    queryParams.put("limit", "100");
-    queryParams.put("offset", "0");
-    request.queryParams = queryParams;
+    request.getQueryParams().put("limit", "100");
+    request.getQueryParams().put("offset", "0");
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
@@ -39,7 +35,7 @@ public class Example {
     } catch (IOException ex) {
       throw ex;
     }
-    request.queryParams = null;
+    request.getQueryParams().clear();
 
     // POST
     request.method = Method.POST;

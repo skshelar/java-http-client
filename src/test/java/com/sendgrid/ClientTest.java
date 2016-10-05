@@ -129,9 +129,7 @@ public class ClientTest extends Mockito {
         request.body = "{\"test\":\"testResult\"}";
       }
       request.endpoint = "/test";
-      Map<String,String> requestHeaders = new HashMap<String, String>();
-      requestHeaders.put("Authorization", "Bearer XXXX");
-      request.headers = requestHeaders;
+      request.getHeaders().put("Authorization", "Bearer XXXX");
       Client client = new Client(httpClient);
       testResponse = client.get(request);
     } catch (URISyntaxException | IOException ex) {

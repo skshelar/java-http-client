@@ -1,6 +1,7 @@
 package com.sendgrid;
 
 import java.util.Map;
+import java.util.HashMap;
 
 /**
   * Class Response provides a standard interface to an API's HTTP request.
@@ -10,10 +11,12 @@ public class Request {
   public String baseUri;
   public String endpoint;
   public String body;
-  public Map<String,String> headers;
-  public Map<String,String> queryParams;
+  private final Map<String, String> headers;
+  private final Map<String, String> queryParams;
 
   public Request() {
+    this.headers = new HashMap<String, String>();
+    this.queryParams = new HashMap<String, String>();
     this.reset();
   }
 
@@ -25,7 +28,15 @@ public class Request {
     this.baseUri = "";
     this.endpoint = "";
     this.body = "";
-    this.headers = null;
-    this.queryParams = null;
+    this.headers.clear();
+    this.queryParams.clear();
+  }
+
+  public Map<String, String> getHeaders() {
+    return this.headers;
+  }
+
+  public Map<String, String> getQueryParams() {
+    return this.queryParams;
   }
 }

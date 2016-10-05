@@ -148,14 +148,14 @@ public class Client {
 		HttpGet httpGet = null;
 
 		try {
-			uri = buildUri(request.baseUri, request.endpoint, request.queryParams);
+			uri = buildUri(request.baseUri, request.endpoint, request.getQueryParams());
 			httpGet = new HttpGet(uri.toString());
 		} catch (URISyntaxException ex) {
 			throw ex;
 		}
 
-		if (request.headers != null) {
-			for (Map.Entry<String, String> entry : request.headers.entrySet()) {
+		if (request.getHeaders() != null) {
+			for (Map.Entry<String, String> entry : request.getHeaders().entrySet()) {
 				httpGet.setHeader(entry.getKey(), entry.getValue());
 			}
 		}
@@ -171,14 +171,14 @@ public class Client {
 		HttpPost httpPost = null;
 
 		try {
-			uri = buildUri(request.baseUri, request.endpoint, request.queryParams);
+			uri = buildUri(request.baseUri, request.endpoint, request.getQueryParams());
 			httpPost = new HttpPost(uri.toString());
 		} catch (URISyntaxException ex) {
 			throw ex;
 		}
 
-		if (request.headers != null) {
-			for (Map.Entry<String, String> entry : request.headers.entrySet()) {
+		if (request.getHeaders() != null) {
+			for (Map.Entry<String, String> entry : request.getHeaders().entrySet()) {
 				httpPost.setHeader(entry.getKey(), entry.getValue());
 			}
 		}
@@ -200,14 +200,14 @@ public class Client {
 		HttpPatch httpPatch = null;
 
 		try {
-			uri = buildUri(request.baseUri, request.endpoint, request.queryParams);
+			uri = buildUri(request.baseUri, request.endpoint, request.getQueryParams());
 			httpPatch = new HttpPatch(uri.toString());
 		} catch (URISyntaxException ex) {
 			throw ex;
 		}
 
-		if (request.headers != null) {
-			for (Map.Entry<String, String> entry : request.headers.entrySet()) {
+		if (request.getHeaders() != null) {
+			for (Map.Entry<String, String> entry : request.getHeaders().entrySet()) {
 				httpPatch.setHeader(entry.getKey(), entry.getValue());
 			}
 		}
@@ -228,14 +228,14 @@ public class Client {
 		HttpPut httpPut = null;
 
 		try {
-			uri = buildUri(request.baseUri, request.endpoint, request.queryParams);
+			uri = buildUri(request.baseUri, request.endpoint, request.getQueryParams());
 			httpPut = new HttpPut(uri.toString());
 		} catch (URISyntaxException ex) {
 			throw ex;
 		}
 
-		if (request.headers != null) {
-			for (Map.Entry<String, String> entry : request.headers.entrySet()) {
+		if (request.getHeaders() != null) {
+			for (Map.Entry<String, String> entry : request.getHeaders().entrySet()) {
 				httpPut.setHeader(entry.getKey(), entry.getValue());
 			}
 		}
@@ -256,14 +256,14 @@ public class Client {
 		HttpDeleteWithBody httpDelete = null;
 
 		try {
-			uri = buildUri(request.baseUri, request.endpoint, request.queryParams);
+			uri = buildUri(request.baseUri, request.endpoint, request.getQueryParams());
 			httpDelete = new HttpDeleteWithBody(uri.toString());
 		} catch (URISyntaxException ex) {
 			throw ex;
 		}
 
-		if (request.headers != null) {
-			for (Map.Entry<String, String> entry : request.headers.entrySet()) {
+		if (request.getHeaders() != null) {
+			for (Map.Entry<String, String> entry : request.getHeaders().entrySet()) {
 				httpDelete.setHeader(entry.getKey(), entry.getValue());
 			}
 		}
@@ -287,7 +287,7 @@ public class Client {
 				//throwing IOException here to not break API behavior.
 				throw new IOException("Request returned status Code "+statusLine.getStatusCode()+"Body:"+(response!=null?response.body:null));
 			}
-	
+
 		} finally {
 			if (serverResponse != null) {
 				serverResponse.close();

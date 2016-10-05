@@ -77,13 +77,9 @@ try {
 `POST /your/api/{param}/call` with headers, query parameters and a request body.
 
 ```java
-Map<String,String> requestHeaders = new HashMap<String, String>();
-requestHeaders.put("Authorization", "Bearer YOUR_API_KEY");
-request.headers = requestHeaders;
-Map<String,String> queryParams = new HashMap<String, String>();
-queryParams.put("limit", "100");
-queryParams.put("offset", "0");
-request.queryParams = queryParams;
+request.getHeaders().put("Authorization", "Bearer YOUR_API_KEY");
+request.getQueryParams().put("limit", "100");
+request.getQueryParams().put("offset", "0");
 request.body ="{\"name\": \"My Request Body\"}";
 request.method = Method.POST;
 String param = "param";
