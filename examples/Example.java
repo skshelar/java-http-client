@@ -33,9 +33,9 @@ public class Example {
     request.queryParams = queryParams;
     try {
       response = client.api(request);
-      System.out.println(response.statusCode);
-      System.out.println(response.body);
-      System.out.println(response.headers);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getBody());
+      System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
     }
@@ -48,16 +48,16 @@ public class Example {
         "{\"name\": \"My api Key\",\"scopes\": [\"mail.send\",\"alerts.create\",\"alerts.read\"]}";
     try {
       response = client.api(request);
-      System.out.println(response.statusCode);
-      System.out.println(response.body);
-      System.out.println(response.headers);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getBody());
+      System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
     }
     String apiKeyId = "";
     try {
       ObjectMapper mapper = new ObjectMapper();
-      JsonNode json = mapper.readTree(response.body);
+      JsonNode json = mapper.readTree(response.getBody());
       apiKeyId = json.path("api_key_id").asText();
     } catch (IOException ex) {
       throw ex;
@@ -69,9 +69,9 @@ public class Example {
     request.endpoint = "/v3/api_keys/" + apiKeyId;
     try {
       response = client.api(request);
-      System.out.println(response.statusCode);
-      System.out.println(response.body);
-      System.out.println(response.headers);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getBody());
+      System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
     }
@@ -81,9 +81,9 @@ public class Example {
     request.body = "{\"name\": \"A New Hope\"}";
     try {
       response = client.api(request);
-      System.out.println(response.statusCode);
-      System.out.println(response.body);
-      System.out.println(response.headers);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getBody());
+      System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
     }
@@ -95,9 +95,9 @@ public class Example {
           "{\"name\": \"A New Hope\",\"scopes\": [\"user.profile.read\",\"user.profile.update\"]}";
     try {
       response = client.api(request);
-      System.out.println(response.statusCode);
-      System.out.println(response.body);
-      System.out.println(response.headers);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getBody());
+      System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
     }
@@ -107,8 +107,8 @@ public class Example {
     request.method = Method.DELETE;
     try {
       response = client.api(request);
-      System.out.println(response.statusCode);
-      System.out.println(response.headers);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
     }

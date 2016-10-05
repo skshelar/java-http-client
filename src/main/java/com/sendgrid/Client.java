@@ -285,9 +285,9 @@ public class Client {
 			final StatusLine statusLine = serverResponse.getStatusLine();
 			if(statusLine.getStatusCode()>=300){
 				//throwing IOException here to not break API behavior.
-				throw new IOException("Request returned status Code "+statusLine.getStatusCode()+"Body:"+(response!=null?response.body:null));
+				throw new IOException("Request returned status Code "+statusLine.getStatusCode()+"Body:"+(response!=null?response.getBody():null));
 			}
-	
+
 		} finally {
 			if (serverResponse != null) {
 				serverResponse.close();
