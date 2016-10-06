@@ -148,7 +148,7 @@ public class Client {
 		HttpGet httpGet = null;
 
 		try {
-			uri = buildUri(request.baseUri, request.endpoint, request.getQueryParams());
+			uri = buildUri(request.getBaseUri(), request.getEndpoint(), request.getQueryParams());
 			httpGet = new HttpGet(uri.toString());
 		} catch (URISyntaxException ex) {
 			throw ex;
@@ -171,7 +171,7 @@ public class Client {
 		HttpPost httpPost = null;
 
 		try {
-			uri = buildUri(request.baseUri, request.endpoint, request.getQueryParams());
+			uri = buildUri(request.getBaseUri(), request.getEndpoint(), request.getQueryParams());
 			httpPost = new HttpPost(uri.toString());
 		} catch (URISyntaxException ex) {
 			throw ex;
@@ -183,8 +183,8 @@ public class Client {
 			}
 		}
 
-		httpPost.setEntity(new StringEntity(request.body, Charset.forName("UTF-8")));
-		if (request.body != "") {
+		httpPost.setEntity(new StringEntity(request.getBody(), Charset.forName("UTF-8")));
+		if (request.getBody() != "") {
 			httpPost.setHeader("Content-Type", "application/json");
 		}
 
@@ -200,7 +200,7 @@ public class Client {
 		HttpPatch httpPatch = null;
 
 		try {
-			uri = buildUri(request.baseUri, request.endpoint, request.getQueryParams());
+			uri = buildUri(request.getBaseUri(), request.getEndpoint(), request.getQueryParams());
 			httpPatch = new HttpPatch(uri.toString());
 		} catch (URISyntaxException ex) {
 			throw ex;
@@ -212,8 +212,8 @@ public class Client {
 			}
 		}
 
-		httpPatch.setEntity(new StringEntity(request.body, Charset.forName("UTF-8")));
-		if (request.body != "") {
+		httpPatch.setEntity(new StringEntity(request.getBody(), Charset.forName("UTF-8")));
+		if (request.getBody() != "") {
 			httpPatch.setHeader("Content-Type", "application/json");
 		}
 		return executeApiCall(httpPatch);
@@ -228,7 +228,7 @@ public class Client {
 		HttpPut httpPut = null;
 
 		try {
-			uri = buildUri(request.baseUri, request.endpoint, request.getQueryParams());
+			uri = buildUri(request.getBaseUri(), request.getEndpoint(), request.getQueryParams());
 			httpPut = new HttpPut(uri.toString());
 		} catch (URISyntaxException ex) {
 			throw ex;
@@ -240,8 +240,8 @@ public class Client {
 			}
 		}
 
-		httpPut.setEntity(new StringEntity(request.body, Charset.forName("UTF-8")));
-		if (request.body != "") {
+		httpPut.setEntity(new StringEntity(request.getBody(), Charset.forName("UTF-8")));
+		if (request.getBody() != "") {
 			httpPut.setHeader("Content-Type", "application/json");
 		}
 
@@ -256,7 +256,7 @@ public class Client {
 		HttpDeleteWithBody httpDelete = null;
 
 		try {
-			uri = buildUri(request.baseUri, request.endpoint, request.getQueryParams());
+			uri = buildUri(request.getBaseUri(), request.getEndpoint(), request.getQueryParams());
 			httpDelete = new HttpDeleteWithBody(uri.toString());
 		} catch (URISyntaxException ex) {
 			throw ex;
@@ -268,8 +268,8 @@ public class Client {
 			}
 		}
 
-		httpDelete.setEntity(new StringEntity(request.body, Charset.forName("UTF-8")));
-		if (request.body != "") {
+		httpDelete.setEntity(new StringEntity(request.getBody(), Charset.forName("UTF-8")));
+		if (request.getBody() != "") {
 			httpDelete.setHeader("Content-Type", "application/json");
 		}
 
@@ -301,10 +301,10 @@ public class Client {
 	 */
 	public Response api(Request request) throws IOException {
 		try {
-			if (request.method == null) {
+			if (request.getMethod() == null) {
 				throw new IOException("We only support GET, PUT, PATCH, POST and DELETE.");
 			}
-			switch (request.method) {
+			switch (request.getMethod()) {
 			case GET:
 				return get(request);
 			case POST:

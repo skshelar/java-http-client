@@ -59,10 +59,10 @@ Here is a quick example:
 Client client = new Client();
 
 Request request = new Request();
-request.baseUri = "api.test.com";
-request.method = Method.GET;
+request.setBaseUri("api.test.com");
+request.setMethod(Method.GET);
 String param = "param";
-request.endpoint = "/your/api/" + param + "/call";
+request.setEndpoint("/your/api/" + param + "/call");
 
 try {
     Response response = client.api(request);
@@ -77,11 +77,11 @@ try {
 `POST /your/api/{param}/call` with headers, query parameters and a request body.
 
 ```java
-request.getHeaders().put("Authorization", "Bearer YOUR_API_KEY");
-request.getQueryParams().put("limit", "100");
-request.getQueryParams().put("offset", "0");
-request.body ="{\"name\": \"My Request Body\"}";
-request.method = Method.POST;
+request.addHeader("Authorization", "Bearer YOUR_API_KEY");
+request.addQueryParam("limit", "100");
+request.addQueryParam("offset", "0");
+request.setBody("{\"name\": \"My Request Body\"}");
+request.setMethod(Method.POST);
 String param = "param";
 request.endpoint = "/your/api/" + param + "/call";
 
