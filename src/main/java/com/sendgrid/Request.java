@@ -7,10 +7,10 @@ import java.util.HashMap;
   * Class Response provides a standard interface to an API's HTTP request.
   */
 public class Request {
-  public Method method;
-  public String baseUri;
-  public String endpoint;
-  public String body;
+  private Method method;
+  private String baseUri;
+  private String endpoint;
+  private String body;
   private final Map<String, String> headers;
   private final Map<String, String> queryParams;
 
@@ -24,12 +24,44 @@ public class Request {
   * Place the object into an empty state.
   */
   public void reset() {
-    this.method = null;
-    this.baseUri = "";
-    this.endpoint = "";
-    this.body = "";
-    this.headers.clear();
-    this.queryParams.clear();
+    this.clearMethod();
+    this.clearBaseUri();
+    this.clearEndpoint();
+    this.clearBody();
+    this.clearHeaders();
+    this.clearQueryParams();
+  }
+
+  public void addQueryParam(String key, String value) {
+    this.queryParams.put(key, value);
+  }
+
+  public void addHeader(String key, String value) {
+    this.headers.put(key, value);
+  }
+
+  public String removeQueryParam(String key) {
+    return this.queryParams.remove(key);
+  }
+
+  public String removeHeader(String key) {
+    return this.headers.remove(key);
+  }
+
+  public void setMethod(Method method) {
+    this.method = method;
+  }
+
+  public void setBaseUri(String baseUri) {
+    this.baseUri = baseUri;
+  }
+
+  public void setEndpoint(String endpoint) {
+    this.endpoint = endpoint;
+  }
+
+  public void setBody(String body) {
+    this.body = body;
   }
 
   public Map<String, String> getHeaders() {
@@ -38,5 +70,45 @@ public class Request {
 
   public Map<String, String> getQueryParams() {
     return this.queryParams;
+  }
+
+  public Method getMethod() {
+    return this.method;
+  }
+
+  public String getBaseUri() {
+    return this.baseUri;
+  }
+
+  public String getEndpoint() {
+    return this.endpoint;
+  }
+
+  public String getBody() {
+    return this.body;
+  }
+
+  public void clearMethod() {
+    this.method = null;
+  }
+
+  public void clearBaseUri() {
+    this.baseUri = "";
+  }
+
+  public void clearEndpoint() {
+    this.endpoint = "";
+  }
+
+  public void clearBody() {
+    this.body = "";
+  }
+
+  public void clearQueryParams() {
+    this.queryParams.clear();
+  }
+
+  public void clearHeaders() {
+    this.headers.clear();
   }
 }

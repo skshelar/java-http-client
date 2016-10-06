@@ -124,12 +124,12 @@ public class ClientTest extends Mockito {
       mockedHeaders = new Header[] { new BasicHeader("headerA", "valueA") };
       when(response.getAllHeaders()).thenReturn(mockedHeaders);
       when(httpClient.execute(Matchers.any(HttpGet.class))).thenReturn(response);
-      request.method = method;
+      request.setMethod(method);
       if ((method == Method.POST) || (method == Method.PATCH) || (method == Method.PUT)) {
-        request.body = "{\"test\":\"testResult\"}";
+        request.setBody("{\"test\":\"testResult\"}");
       }
-      request.endpoint = "/test";
-      request.getHeaders().put("Authorization", "Bearer XXXX");
+      request.setEndpoint("/test");
+      request.addHeader("Authorization", "Bearer XXXX");
       Client client = new Client(httpClient);
       testResponse = client.get(request);
     } catch (URISyntaxException | IOException ex) {
