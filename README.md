@@ -83,7 +83,7 @@ request.addQueryParam("offset", "0");
 request.setBody("{\"name\": \"My Request Body\"}");
 request.setMethod(Method.POST);
 String param = "param";
-request.endpoint = "/your/api/" + param + "/call";
+request.setEndpoint("/your/api/" + param + "/call");
 
 try {
     Response response = client.api(request);
