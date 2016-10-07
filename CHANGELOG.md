@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2016-10-06
+### BREAKING Change
+- [Pull #15](https://github.com/sendgrid/java-http-client/pull/15): Update the request object with sensible defaults and access methods
+- Fixes [Issue #13](https://github.com/sendgrid/java-http-client/issues/13): Update the Request object with sensible defaults and access methods
+- The breaking change is that variables that were public are now private and accessable only via getters and setters
+- BIG thanks to [Diego Camargo](https://github.com/belfazt) for the pull request!
+
 ## [2.3.4] - 2016-08-09
 ### Fix
 - [Pull #7](https://github.com/sendgrid/java-http-client/pull/7): Fix Response Charset to UTF-8

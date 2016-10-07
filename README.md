@@ -20,7 +20,7 @@ All updates to this project is documented in our [CHANGELOG](https://github.com/
 ...
 dependencies {
   ...
-  compile 'com.sendgrid:java-http-client:2.3.4'
+  compile 'com.sendgrid:java-http-client:3.0.0'
 }
 
 repositories {
@@ -35,7 +35,7 @@ repositories {
 <dependency>
     <groupId>com.sendgrid</groupId>
     <artifactId>java-http-client</artifactId>
-    <version>2.3.4</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
@@ -43,7 +43,7 @@ repositories {
 
 ## Install via Fat Jar
 
-[Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/2.3.4/java-http-client-2.3.4-jar.jar)
+[Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/3.0.0/java-http-client-3.0.0-jar.jar)
 
 ## Dependencies
 
@@ -112,7 +112,7 @@ source ./sendgrid.env
 ```bash
 mvn package
 cd examples
-javac -classpath {path_to}/sendgrid-java-http-client-2.3.4-jar.jar:. Example.java && java -classpath {path_to}/sendgrid-java-http-client-2.3.4-jar.jar:. Example
+javac -classpath {path_to}/sendgrid-java-http-client-3.0.0-jar.jar:. Example.java && java -classpath {path_to}/sendgrid-java-http-client-3.0.0-jar.jar:. Example
 ```
 
 ## Roadmap
