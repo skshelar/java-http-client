@@ -17,20 +17,16 @@ public class Example {
     Client client = new Client();
 
     Request request = new Request();
-    request.baseUri = "api.sendgrid.com";
-    Map<String,String> requestHeaders = new HashMap<String, String>();
-    requestHeaders.put("Authorization", "Bearer " + System.getenv("SENDGRID_API_KEY"));
-    request.headers = requestHeaders;
+    request.setBaseUri("api.sendgrid.com");
+    request.addHeader("Authorization", "Bearer " + System.getenv("SENDGRID_API_KEY"));
 
     Response response = new Response();
 
     // GET Collection
-    request.method = Method.GET;
-    request.endpoint = "/v3/api_keys";
-    Map<String,String> queryParams = new HashMap<String, String>();
-    queryParams.put("limit", "100");
-    queryParams.put("offset", "0");
-    request.queryParams = queryParams;
+    request.setMethod(Method.GET);
+    request.setEndpoint("/v3/api_keys");
+    request.addQueryParam("limit", "100");
+    request.addQueryParam("offset", "0");
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
@@ -39,13 +35,13 @@ public class Example {
     } catch (IOException ex) {
       throw ex;
     }
-    request.queryParams = null;
+    request.clearQueryParams();
 
     // POST
-    request.method = Method.POST;
-    request.endpoint = "/v3/api_keys";
-    request.body =
-        "{\"name\": \"My api Key\",\"scopes\": [\"mail.send\",\"alerts.create\",\"alerts.read\"]}";
+    request.setMethod(Method.POST);
+    request.setEndpoint("/v3/api_keys");
+    request.setBody("{\"name\": \"My api Key\",\"scopes\": [\"mail.send\",\"alerts.create\",\"alerts.read\"]}");
+
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
@@ -62,11 +58,11 @@ public class Example {
     } catch (IOException ex) {
       throw ex;
     }
-    request.body = "";
+    request.clearBody();
 
     // GET Single
-    request.method = Method.GET;
-    request.endpoint = "/v3/api_keys/" + apiKeyId;
+    request.setMethod(Method.GET);
+    request.setEndpoint("/v3/api_keys/" + apiKeyId);
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
@@ -77,8 +73,8 @@ public class Example {
     }
 
     // PATCH
-    request.method = Method.PATCH;
-    request.body = "{\"name\": \"A New Hope\"}";
+    request.setMethod(Method.PATCH);
+    request.setBody("{\"name\": \"A New Ho}");
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
@@ -87,12 +83,11 @@ public class Example {
     } catch (IOException ex) {
       throw ex;
     }
-    request.body = "";
+    request.clearBody();
 
     // PUT
-    request.method = Method.PUT;
-    request.body =
-          "{\"name\": \"A New Hope\",\"scopes\": [\"user.profile.read\",\"user.profile.update\"]}";
+    request.setMethod(Method.PUT);
+    request.setBody("{\"name\": \"A New Hope\",\"scopes\": [\"user.profile.read\",\"user.profile.update\"]}");
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
@@ -101,10 +96,10 @@ public class Example {
     } catch (IOException ex) {
       throw ex;
     }
-    request.body = "";
+    request.clearBody();
 
     // DELETE
-    request.method = Method.DELETE;
+    request.setMethod(Method.DELETE);
     try {
       response = client.api(request);
       System.out.println(response.statusCode);
