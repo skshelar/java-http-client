@@ -29,9 +29,9 @@ public class Example {
     request.addQueryParam("offset", "0");
     try {
       response = client.api(request);
-      System.out.println(response.statusCode);
-      System.out.println(response.body);
-      System.out.println(response.headers);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getBody());
+      System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
     }
@@ -44,16 +44,16 @@ public class Example {
 
     try {
       response = client.api(request);
-      System.out.println(response.statusCode);
-      System.out.println(response.body);
-      System.out.println(response.headers);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getBody());
+      System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
     }
     String apiKeyId = "";
     try {
       ObjectMapper mapper = new ObjectMapper();
-      JsonNode json = mapper.readTree(response.body);
+      JsonNode json = mapper.readTree(response.getBody());
       apiKeyId = json.path("api_key_id").asText();
     } catch (IOException ex) {
       throw ex;
@@ -65,9 +65,9 @@ public class Example {
     request.setEndpoint("/v3/api_keys/" + apiKeyId);
     try {
       response = client.api(request);
-      System.out.println(response.statusCode);
-      System.out.println(response.body);
-      System.out.println(response.headers);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getBody());
+      System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
     }
@@ -77,9 +77,9 @@ public class Example {
     request.setBody("{\"name\": \"A New Ho}");
     try {
       response = client.api(request);
-      System.out.println(response.statusCode);
-      System.out.println(response.body);
-      System.out.println(response.headers);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getBody());
+      System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
     }
@@ -90,9 +90,9 @@ public class Example {
     request.setBody("{\"name\": \"A New Hope\",\"scopes\": [\"user.profile.read\",\"user.profile.update\"]}");
     try {
       response = client.api(request);
-      System.out.println(response.statusCode);
-      System.out.println(response.body);
-      System.out.println(response.headers);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getBody());
+      System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
     }
@@ -102,8 +102,8 @@ public class Example {
     request.setMethod(Method.DELETE);
     try {
       response = client.api(request);
-      System.out.println(response.statusCode);
-      System.out.println(response.headers);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
     }

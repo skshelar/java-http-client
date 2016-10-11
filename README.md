@@ -66,9 +66,9 @@ request.setEndpoint("/your/api/" + param + "/call");
 
 try {
     Response response = client.api(request);
-    System.out.println(response.statusCode);
-    System.out.println(response.body);
-    System.out.println(response.headers);
+    System.out.println(response.getStatusCode());
+    System.out.println(response.getBody());
+    System.out.println(response.getHeaders());
 } catch (IOException ex) {
     throw ex;
 }
@@ -87,9 +87,9 @@ request.setEndpoint("/your/api/" + param + "/call");
 
 try {
     Response response = client.api(request);
-    System.out.println(response.statusCode);
-    System.out.println(response.body);
-    System.out.println(response.headers);
+    System.out.println(response.getStatusCode());
+    System.out.println(response.getBody());
+    System.out.println(response.getHeaders());
 } catch (IOException ex) {
     throw ex;
 }

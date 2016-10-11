@@ -101,13 +101,13 @@ public class ClientTest extends Mockito {
       Assert.assertTrue(errors.toString(), false);
     }
 
-    Assert.assertTrue(testResponse.statusCode == 200);
-    Assert.assertEquals(testResponse.body, "{\"message\":\"success\"}");
+    Assert.assertTrue(testResponse.getStatusCode() == 200);
+    Assert.assertEquals(testResponse.getBody(), "{\"message\":\"success\"}");
     Map<String,String> headers = new HashMap<String,String>();
     for (Header h:mockedHeaders) {
       headers.put(h.getName(), h.getValue());
     }
-    Assert.assertEquals(testResponse.headers, headers);
+    Assert.assertEquals(testResponse.getHeaders(), headers);
   }
 
   public void testMethod(Method method, int statusCode) {
@@ -138,16 +138,16 @@ public class ClientTest extends Mockito {
       Assert.assertTrue(errors.toString(), false);
     }
 
-    Assert.assertTrue(testResponse.statusCode == statusCode);
+    Assert.assertTrue(testResponse.getStatusCode() == statusCode);
     if (method != Method.DELETE) {
-      Assert.assertEquals(testResponse.body, "{\"message\":\"success\"}");
+      Assert.assertEquals(testResponse.getBody(), "{\"message\":\"success\"}");
     }
-    Assert.assertEquals(testResponse.body, "{\"message\":\"success\"}");
+    Assert.assertEquals(testResponse.getBody(), "{\"message\":\"success\"}");
     Map<String,String> headers = new HashMap<String,String>();
     for (Header h:mockedHeaders) {
       headers.put(h.getName(), h.getValue());
     }
-    Assert.assertEquals(testResponse.headers, headers);
+    Assert.assertEquals(testResponse.getHeaders(), headers);
   }
 
   @Test
