@@ -89,7 +89,7 @@ source ./sendgrid.env
 ```bash
 ./gradlew build
 cd examples
-javac -classpath {path_to}/sendgrid-java-http-client-3.0.0-jar.jar:. Example.java && java -classpath {path_to}/sendgrid-java-http-client-3.0.0-jar.jar:. Example
+javac -classpath {path_to}/sendgrid-java-http-client-4.0.0-jar.jar:. Example.java && java -classpath {path_to}/sendgrid-java-http-client-4.0.0-jar.jar:. Example
 ```
 
 <a name="understanding_the_codebase"></a>
