@@ -12,6 +12,7 @@ import java.util.Map;
 import org.apache.http.Header;
 import org.apache.http.StatusLine;
 import org.apache.http.annotation.NotThreadSafe;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
@@ -277,23 +278,19 @@ public class Client {
 	}
 
 	private Response executeApiCall(HttpRequestBase httpPost) throws IOException {
-		CloseableHttpResponse serverResponse = null;
-		Response response = new Response();
+		CloseableHttpResponse serverResponse = httpClient.execute(httpPost);
 		try {
-			serverResponse = httpClient.execute(httpPost);
-			response = getResponse(serverResponse);
-			final StatusLine statusLine = serverResponse.getStatusLine();
-			if(statusLine.getStatusCode()>=300){
+			Response response = getResponse(serverResponse);
+			if(response.getStatusCode() >= 300) {
 				//throwing IOException here to not break API behavior.
-				throw new IOException("Request returned status Code "+statusLine.getStatusCode()+"Body:"+(response!=null?response.getBody():null));
+				throw new IOException("Request returned status Code "+response.getStatusCode()+"Body:"+response.getBody());
 			}
-
+			return response;
+		} catch(ClientProtocolException e) {
+			throw new IOException(e.getMessage());
 		} finally {
-			if (serverResponse != null) {
-				serverResponse.close();
-			}
+			serverResponse.close();
 		}
-		return response;
 	}
 
 	/**
