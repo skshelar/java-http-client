@@ -278,18 +278,20 @@ public class Client {
 	}
 
 	private Response executeApiCall(HttpRequestBase httpPost) throws IOException {
-		CloseableHttpResponse serverResponse = httpClient.execute(httpPost);
 		try {
-			Response response = getResponse(serverResponse);
-			if(response.getStatusCode() >= 300) {
-				//throwing IOException here to not break API behavior.
-				throw new IOException("Request returned status Code "+response.getStatusCode()+"Body:"+response.getBody());
+			CloseableHttpResponse serverResponse = httpClient.execute(httpPost);
+			try {
+				Response response = getResponse(serverResponse);
+				if(response.getStatusCode() >= 300) {
+					//throwing IOException here to not break API behavior.
+					throw new IOException("Request returned status Code "+response.getStatusCode()+"Body:"+response.getBody());
+				}
+				return response;
+			} finally {
+				serverResponse.close();
 			}
-			return response;
 		} catch(ClientProtocolException e) {
 			throw new IOException(e.getMessage());
-		} finally {
-			serverResponse.close();
 		}
 	}
 
@@ -321,6 +323,17 @@ public class Client {
 			StringWriter errors = new StringWriter();
 			ex.printStackTrace(new PrintWriter(errors));
 			throw new IOException(errors.toString());
+		}
+	}
+
+	@Override
+	public void finalize() throws Throwable {
+		try {
+			this.httpClient.close();
+		} catch(IOException e) {
+			throw new Throwable(e.getMessage());
+		} finally {
+			super.finalize();
 		}
 	}
 }
