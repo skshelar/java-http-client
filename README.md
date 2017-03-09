@@ -20,7 +20,7 @@ All updates to this project is documented in our [CHANGELOG](https://github.com/
 ...
 dependencies {
   ...
-  compile 'com.sendgrid:java-http-client:4.0.0'
+  compile 'com.sendgrid:java-http-client:4.1.0'
 }
 
 repositories {
@@ -43,7 +43,7 @@ repositories {
 
 ## Install via Fat Jar
 
-[Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/4.0.0/java-http-client-4.0.0-jar.jar)
+[Download](http://repo1.maven.org/maven2/com/sendgrid/java-http-client/4.1.0/java-http-client-4.1.0-jar.jar)
 
 ## Dependencies
 

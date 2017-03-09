@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.0] - 2016-10-11
+### BREAKING Change
+- [Pull #17](https://github.com/sendgrid/java-http-client/pull/17): Assign server response outside try block
+- BIG thanks to [Michael Dempsey](https://github.com/bluestealth) for the pull request!
+
 ## [4.0.0] - 2016-10-11
 ### BREAKING Change
 - [Pull #14](https://github.com/sendgrid/java-http-client/pull/14): Make response have private variables
