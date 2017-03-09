@@ -12,6 +12,7 @@ import java.util.Map;
 import org.apache.http.Header;
 import org.apache.http.StatusLine;
 import org.apache.http.annotation.NotThreadSafe;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
@@ -277,23 +278,21 @@ public class Client {
 	}
 
 	private Response executeApiCall(HttpRequestBase httpPost) throws IOException {
-		CloseableHttpResponse serverResponse = null;
-		Response response = new Response();
 		try {
-			serverResponse = httpClient.execute(httpPost);
-			response = getResponse(serverResponse);
-			final StatusLine statusLine = serverResponse.getStatusLine();
-			if(statusLine.getStatusCode()>=300){
-				//throwing IOException here to not break API behavior.
-				throw new IOException("Request returned status Code "+statusLine.getStatusCode()+"Body:"+(response!=null?response.getBody():null));
-			}
-
-		} finally {
-			if (serverResponse != null) {
+			CloseableHttpResponse serverResponse = httpClient.execute(httpPost);
+			try {
+				Response response = getResponse(serverResponse);
+				if(response.getStatusCode() >= 300) {
+					//throwing IOException here to not break API behavior.
+					throw new IOException("Request returned status Code "+response.getStatusCode()+"Body:"+response.getBody());
+				}
+				return response;
+			} finally {
 				serverResponse.close();
 			}
+		} catch(ClientProtocolException e) {
+			throw new IOException(e.getMessage());
 		}
-		return response;
 	}
 
 	/**
@@ -324,6 +323,17 @@ public class Client {
 			StringWriter errors = new StringWriter();
 			ex.printStackTrace(new PrintWriter(errors));
 			throw new IOException(errors.toString());
+		}
+	}
+
+	@Override
+	public void finalize() throws Throwable {
+		try {
+			this.httpClient.close();
+		} catch(IOException e) {
+			throw new Throwable(e.getMessage());
+		} finally {
+			super.finalize();
 		}
 	}
 }
