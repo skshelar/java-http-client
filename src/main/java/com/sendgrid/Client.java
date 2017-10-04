@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.http.Header;
-import org.apache.http.StatusLine;
+import org.apache.http.HttpMessage;
 import org.apache.http.annotation.NotThreadSafe;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
@@ -31,6 +31,7 @@ import org.apache.http.impl.client.HttpClients;
 class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
 	public static final String METHOD_NAME = "DELETE";
 
+	@Override
 	public String getMethod() {
 		return METHOD_NAME;
 	}
@@ -185,9 +186,7 @@ public class Client {
 		}
 
 		httpPost.setEntity(new StringEntity(request.getBody(), Charset.forName("UTF-8")));
-		if (request.getBody() != "") {
-			httpPost.setHeader("Content-Type", "application/json");
-		}
+		writeContentTypeIfNeeded(request, httpPost);
 
 		return executeApiCall(httpPost);
 	}
@@ -214,9 +213,8 @@ public class Client {
 		}
 
 		httpPatch.setEntity(new StringEntity(request.getBody(), Charset.forName("UTF-8")));
-		if (request.getBody() != "") {
-			httpPatch.setHeader("Content-Type", "application/json");
-		}
+		writeContentTypeIfNeeded(request, httpPatch);
+
 		return executeApiCall(httpPatch);
 	}
 
@@ -242,9 +240,7 @@ public class Client {
 		}
 
 		httpPut.setEntity(new StringEntity(request.getBody(), Charset.forName("UTF-8")));
-		if (request.getBody() != "") {
-			httpPut.setHeader("Content-Type", "application/json");
-		}
+		writeContentTypeIfNeeded(request, httpPut);
 
 		return executeApiCall(httpPut);
 	}
@@ -270,11 +266,15 @@ public class Client {
 		}
 
 		httpDelete.setEntity(new StringEntity(request.getBody(), Charset.forName("UTF-8")));
-		if (request.getBody() != "") {
-			httpDelete.setHeader("Content-Type", "application/json");
-		}
+		writeContentTypeIfNeeded(request, httpDelete);
 
 		return executeApiCall(httpDelete);
+	}
+
+	private void writeContentTypeIfNeeded(Request request, HttpMessage httpMessage) {
+		if (!"".equals(request.getBody())) {
+			httpMessage.setHeader("Content-Type", "application/json");
+		}
 	}
 
 	private Response executeApiCall(HttpRequestBase httpPost) throws IOException {
