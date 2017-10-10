@@ -1,11 +1,17 @@
 language: java
 sudo: false
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 jdk:
 - oraclejdk8
 - oraclejdk7
 - openjdk7
 after_script:
-- "./gradlew build"
 - "./scripts/s3upload.sh"
 env:
   global:
@@ -13,7 +19,6 @@ env:
   - secure: Iki1btwhG1nlyjnEMu90Oh/hoatFpPiiKkqpj7siLnlLp2xbBQ2003jRsn30I3Vujes2ugvzdlHqBJ9lDwRvfGrKXcLlRvYuDQ24N2YKquEiKHUxs+iMOzTQj6Sf64KL5O0aSZd1l5rjWgsQ0qqjHW9u3l5bUjqxzrhAI2Js37U=
   - secure: Khi6a4z1lfZmDEDV738MOiWznRcTv5ILZUM+igEw2txX7PGX+B5909WridpAijTGiurJ6eda7jvsUgci8DTPQCXB18LD6N870hnPcSQkuI6zDAhKTx+w/ZsfPLWh28sP2CVzbqGdxaitZDKxRWaVmKnBZpyi8XI9UKjmyK2sjwE=
   - secure: wKXAjjBgCLM4h++nP1xDQQtYU10JbwwynY0XB920SoQjI2Uu82cMPtkEXFWTpzyIS2hE5B3qvu75VHNdLqDUtek3e3lBg5k3SpYgGin20dg3SDEJrvA4vlvcApdQ132pMEWdDOVwzbXhm9+JTjALYbc3fX+VAQX1u5daPyeDGC4=
-  - JAVA_HOME=/usr/lib/jvm/java-8-oracle
 notifications:
   hipchat:
     rooms:
