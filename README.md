@@ -117,7 +117,7 @@ javac -classpath {path_to}/sendgrid-java-http-client-4.0.0-jar.jar:. Example.jav
 
 ## Roadmap
 
-If you are intersted in the future direction of this project, please take a look at our [milestones](https://github.com/sendgrid/java-http-client/milestones). We would love to hear your feedback.
+If you are interested in the future direction of this project, please take a look at our [milestones](https://github.com/sendgrid/java-http-client/milestones). We would love to hear your feedback.
 
 ## How to Contribute
 
@@ -136,5 +136,4 @@ java-http-client is guided and supported by the SendGrid [Developer Experience T
 
 java-http-client is maintained and funded by SendGrid, Inc. The names and logos for java-http-client are trademarks of SendGrid, Inc.
 
-![SendGrid Logo]
-(https://uiux.s3.amazonaws.com/2016-logos/email-logo%402x.png)
+![SendGrid Logo](https://uiux.s3.amazonaws.com/2016-logos/email-logo%402x.png)
