@@ -60,7 +60,8 @@ public class Client {
 	}
 
 	/**
-	 * Constructor for passing in an httpClient for mocking.
+	 * Constructor for passing in an httpClient, typically for mocking. Passed-in httpClient will not be closed
+	 * by this Client.
 	 *
 	 * @param httpClient
 	 *            an Apache CloseableHttpClient
