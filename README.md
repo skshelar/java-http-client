@@ -136,6 +136,8 @@ cd examples
 javac -classpath {path_to}/sendgrid-java-http-client-4.0.0-jar.jar:. Example.java && java -classpath {path_to}/sendgrid-java-http-client-4.0.0-jar.jar:. Example
 ```
 
+You can use the ```.env_example``` file located at "examples" folder. Just copy it to a ```.env``` folder ou can put on your project's root.
+
 <a name="roadmap"></a>
 # Roadmap
 
