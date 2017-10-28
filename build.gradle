@@ -17,7 +17,7 @@ apply plugin: 'signing'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 group         = 'com.sendgrid'
-version       = '4.1.0'
+version       = '4.1.1'
 ext.packaging = 'jar'
 
 allprojects {
@@ -29,10 +29,6 @@ allprojects {
 if (!hasProperty("sonatypeUsername")) {
   ext.sonatypeUsername = null
   ext.sonatypePassword = null
-}
-
-task wrapper(type: Wrapper) {
-  gradleVersion = '1.8'
 }
 
 buildscript {
@@ -47,7 +43,7 @@ buildscript {
 dependencies {
   compile 'org.apache.httpcomponents:httpcore:4.4.4'
   compile 'org.apache.httpcomponents:httpclient:4.5.2'
-  compile 'org.mockito:mockito-core:1.10.19'
+  testCompile 'org.mockito:mockito-core:1.10.19'
   testCompile group: 'junit', name: 'junit-dep', version: '4.10'
 
 }
