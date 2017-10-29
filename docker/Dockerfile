@@ -14,7 +14,7 @@ RUN chmod +x ./install.sh && \
 
 # set up default sendgrid env
 WORKDIR /root/sources
-RUN git clone https://github.com/sendgrid/sendgrid-java.git
+RUN git clone https://github.com/sendgrid/java-http-client.git
 WORKDIR /root
 RUN ln -s /root/sources/java-http-client/sendgrid
 
