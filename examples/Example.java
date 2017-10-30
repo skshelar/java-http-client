@@ -28,10 +28,7 @@ public class Example {
     request.addQueryParam("limit", "100");
     request.addQueryParam("offset", "0");
     try {
-      response = client.api(request);
-      System.out.println(response.getStatusCode());
-      System.out.println(response.getBody());
-      System.out.println(response.getHeaders());
+      processResponse();
     } catch (IOException ex) {
       throw ex;
     }
@@ -43,10 +40,7 @@ public class Example {
     request.setBody("{\"name\": \"My api Key\",\"scopes\": [\"mail.send\",\"alerts.create\",\"alerts.read\"]}");
 
     try {
-      response = client.api(request);
-      System.out.println(response.getStatusCode());
-      System.out.println(response.getBody());
-      System.out.println(response.getHeaders());
+      processResponse();
     } catch (IOException ex) {
       throw ex;
     }
@@ -64,10 +58,7 @@ public class Example {
     request.setMethod(Method.GET);
     request.setEndpoint("/v3/api_keys/" + apiKeyId);
     try {
-      response = client.api(request);
-      System.out.println(response.getStatusCode());
-      System.out.println(response.getBody());
-      System.out.println(response.getHeaders());
+      processResponse();
     } catch (IOException ex) {
       throw ex;
     }
@@ -76,10 +67,7 @@ public class Example {
     request.setMethod(Method.PATCH);
     request.setBody("{\"name\": \"A New Ho}");
     try {
-      response = client.api(request);
-      System.out.println(response.getStatusCode());
-      System.out.println(response.getBody());
-      System.out.println(response.getHeaders());
+      processResponse();
     } catch (IOException ex) {
       throw ex;
     }
@@ -89,11 +77,7 @@ public class Example {
     request.setMethod(Method.PUT);
     request.setBody("{\"name\": \"A New Hope\",\"scopes\": [\"user.profile.read\",\"user.profile.update\"]}");
     try {
-      response = client.api(request);
-      System.out.println(response.getStatusCode());
-      System.out.println(response.getBody());
-      System.out.println(response.getHeaders());
-    } catch (IOException ex) {
+      processResponse();
       throw ex;
     }
     request.clearBody();
@@ -107,5 +91,13 @@ public class Example {
     } catch (IOException ex) {
       throw ex;
     }
+  }
+  
+  //Refactor method
+  private void processResponse(){
+      response = client.api(request);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getBody());
+      System.out.println(response.getHeaders());
   }
 }
