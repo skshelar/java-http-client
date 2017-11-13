@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.http.Header;
-import org.apache.http.StatusLine;
 import org.apache.http.annotation.NotThreadSafe;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
@@ -31,6 +30,7 @@ import org.apache.http.impl.client.HttpClients;
 class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
 	public static final String METHOD_NAME = "DELETE";
 
+	@Override
 	public String getMethod() {
 		return METHOD_NAME;
 	}
@@ -48,6 +48,7 @@ public class Client {
 
 	private CloseableHttpClient httpClient;
 	private Boolean test;
+	private boolean createdHttpClient;
 
 	/**
 	 * Constructor for using the default CloseableHttpClient.
@@ -55,17 +56,18 @@ public class Client {
 	public Client() {
 		this.httpClient = HttpClients.createDefault();
 		this.test = false;
+		this.createdHttpClient = true;
 	}
 
 	/**
-	 * Constructor for passing in an httpClient for mocking.
+	 * Constructor for passing in an httpClient, typically for mocking. Passed-in httpClient will not be closed
+	 * by this Client.
 	 *
 	 * @param httpClient
 	 *            an Apache CloseableHttpClient
 	 */
 	public Client(CloseableHttpClient httpClient) {
-		this.httpClient = httpClient;
-		this.test = false;
+		this(httpClient, false);
 	}
 
 	/**
@@ -75,9 +77,23 @@ public class Client {
 	 *            is a Bool
 	 */
 	public Client(Boolean test) {
-		this.httpClient = HttpClients.createDefault();
-		this.test = test;
+		this(HttpClients.createDefault(), test);
 	}
+
+	/**
+	 * Constructor for passing in a  an httpClient and test parameter to allow for http calls
+	 *
+	 * @param httpClient
+	 *            an Apache CloseableHttpClient
+	 * @param test
+	 *            is a Bool
+	 */
+	public Client(CloseableHttpClient httpClient, Boolean test) {
+		this.httpClient = httpClient;
+		this.test = test;
+		this.createdHttpClient = true;
+	}
+
 
 	/**
 	 * Add query parameters to a URL.
@@ -329,7 +345,9 @@ public class Client {
 	@Override
 	public void finalize() throws Throwable {
 		try {
-			this.httpClient.close();
+			if(this.createdHttpClient) {
+				this.httpClient.close();
+			}
 		} catch(IOException e) {
 			throw new Throwable(e.getMessage());
 		} finally {
