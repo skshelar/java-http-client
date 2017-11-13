@@ -8,7 +8,7 @@ public class TestRequiredFilesExist {
 
     // ./Docker or docker/Docker
     @Test public void checkDockerExists() {
-        boolean dockerExists = new File("./Docker").exists() ||
+        boolean dockerExists = new File("./docker/Dockerfile").exists() ||
         new File("./docker/Docker").exists();
         assertTrue(dockerExists);
     }
