@@ -22,10 +22,7 @@ public class Example {
     request.addQueryParam("limit", "100");
     request.addQueryParam("offset", "0");
     try {
-      Response response = client.api(request);
-      System.out.println(response.getStatusCode());
-      System.out.println(response.getBody());
-      System.out.println(response.getHeaders());
+      processResponse();
     } catch (IOException ex) {
       throw ex;
     }
@@ -38,10 +35,12 @@ public class Example {
     request.setBody("{\"name\": \"My api Key\",\"scopes\": [\"mail.send\",\"alerts.create\",\"alerts.read\"]}");
 
     try {
-      Response response = client.api(request);
-      System.out.println(response.getStatusCode());
-      System.out.println(response.getBody());
-      System.out.println(response.getHeaders());
+      processResponse();
+    } catch (IOException ex) {
+      throw ex;
+    }
+    String apiKeyId = "";
+    try {
       ObjectMapper mapper = new ObjectMapper();
       JsonNode json = mapper.readTree(response.getBody());
       apiKeyId = json.path("api_key_id").asText();
@@ -55,10 +54,7 @@ public class Example {
     request.setMethod(Method.GET);
     request.setEndpoint("/v3/api_keys/" + apiKeyId);
     try {
-      Response response = client.api(request);
-      System.out.println(response.getStatusCode());
-      System.out.println(response.getBody());
-      System.out.println(response.getHeaders());
+      processResponse();
     } catch (IOException ex) {
       throw ex;
     } 
@@ -68,10 +64,7 @@ public class Example {
     request.setMethod(Method.PATCH);
     request.setBody("{\"name\": \"A New Ho}");
     try {
-      Response response = client.api(request);
-      System.out.println(response.getStatusCode());
-      System.out.println(response.getBody());
-      System.out.println(response.getHeaders());
+      processResponse();
     } catch (IOException ex) {
       throw ex;
     }
@@ -82,10 +75,7 @@ public class Example {
     request.setMethod(Method.PUT);
     request.setBody("{\"name\": \"A New Hope\",\"scopes\": [\"user.profile.read\",\"user.profile.update\"]}");
     try {
-      Response response = client.api(request);
-      System.out.println(response.getStatusCode());
-      System.out.println(response.getBody());
-      System.out.println(response.getHeaders());
+      processResponse();
     } catch (IOException ex) {
       throw ex;
     }
@@ -127,5 +117,13 @@ public class Example {
 
     // DELETE
     delete(client, request);
+  }
+  
+  //Refactor method
+  private void processResponse(){
+      response = client.api(request);
+      System.out.println(response.getStatusCode());
+      System.out.println(response.getBody());
+      System.out.println(response.getHeaders());
   }
 }
