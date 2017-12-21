@@ -1,5 +1,6 @@
 package com.sendgrid;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -45,7 +46,7 @@ class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
 /**
  * Class Client allows for quick and easy access any REST or REST-like API.
  */
-public class Client {
+public class Client implements Closeable {
 
 	private CloseableHttpClient httpClient;
 	private Boolean test;
@@ -343,11 +344,14 @@ public class Client {
 	}
 
 	@Override
+	public void close() throws IOException {
+      		this.httpClient.close();
+	}
+
+	@Override
 	public void finalize() throws Throwable {
 		try {
-			if(this.createdHttpClient) {
-				this.httpClient.close();
-			}
+			close();
 		} catch(IOException e) {
 			throw new Throwable(e.getMessage());
 		} finally {
