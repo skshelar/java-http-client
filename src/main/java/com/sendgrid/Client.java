@@ -298,12 +298,7 @@ public class Client implements Closeable {
 		try {
 			CloseableHttpResponse serverResponse = httpClient.execute(httpPost);
 			try {
-				Response response = getResponse(serverResponse);
-				if(response.getStatusCode() >= 300) {
-					//throwing IOException here to not break API behavior.
-					throw new IOException("Request returned status Code "+response.getStatusCode()+"Body:"+response.getBody());
-				}
-				return response;
+				return getResponse(serverResponse);
 			} finally {
 				serverResponse.close();
 			}
