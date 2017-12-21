@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.http.Header;
-import org.apache.http.StatusLine;
+import org.apache.http.HttpMessage;
 import org.apache.http.annotation.NotThreadSafe;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
@@ -32,6 +32,7 @@ import org.apache.http.impl.client.HttpClients;
 class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
 	public static final String METHOD_NAME = "DELETE";
 
+	@Override
 	public String getMethod() {
 		return METHOD_NAME;
 	}
@@ -49,6 +50,7 @@ public class Client implements Closeable {
 
 	private CloseableHttpClient httpClient;
 	private Boolean test;
+	private boolean createdHttpClient;
 
 	/**
 	 * Constructor for using the default CloseableHttpClient.
@@ -56,17 +58,18 @@ public class Client implements Closeable {
 	public Client() {
 		this.httpClient = HttpClients.createDefault();
 		this.test = false;
+		this.createdHttpClient = true;
 	}
 
 	/**
-	 * Constructor for passing in an httpClient for mocking.
+	 * Constructor for passing in an httpClient, typically for mocking. Passed-in httpClient will not be closed
+	 * by this Client.
 	 *
 	 * @param httpClient
 	 *            an Apache CloseableHttpClient
 	 */
 	public Client(CloseableHttpClient httpClient) {
-		this.httpClient = httpClient;
-		this.test = false;
+		this(httpClient, false);
 	}
 
 	/**
@@ -76,9 +79,23 @@ public class Client implements Closeable {
 	 *            is a Bool
 	 */
 	public Client(Boolean test) {
-		this.httpClient = HttpClients.createDefault();
-		this.test = test;
+		this(HttpClients.createDefault(), test);
 	}
+
+	/**
+	 * Constructor for passing in a  an httpClient and test parameter to allow for http calls
+	 *
+	 * @param httpClient
+	 *            an Apache CloseableHttpClient
+	 * @param test
+	 *            is a Bool
+	 */
+	public Client(CloseableHttpClient httpClient, Boolean test) {
+		this.httpClient = httpClient;
+		this.test = test;
+		this.createdHttpClient = true;
+	}
+
 
 	/**
 	 * Add query parameters to a URL.
@@ -186,9 +203,7 @@ public class Client implements Closeable {
 		}
 
 		httpPost.setEntity(new StringEntity(request.getBody(), Charset.forName("UTF-8")));
-		if (request.getBody() != "") {
-			httpPost.setHeader("Content-Type", "application/json");
-		}
+		writeContentTypeIfNeeded(request, httpPost);
 
 		return executeApiCall(httpPost);
 	}
@@ -215,9 +230,8 @@ public class Client implements Closeable {
 		}
 
 		httpPatch.setEntity(new StringEntity(request.getBody(), Charset.forName("UTF-8")));
-		if (request.getBody() != "") {
-			httpPatch.setHeader("Content-Type", "application/json");
-		}
+		writeContentTypeIfNeeded(request, httpPatch);
+
 		return executeApiCall(httpPatch);
 	}
 
@@ -243,9 +257,7 @@ public class Client implements Closeable {
 		}
 
 		httpPut.setEntity(new StringEntity(request.getBody(), Charset.forName("UTF-8")));
-		if (request.getBody() != "") {
-			httpPut.setHeader("Content-Type", "application/json");
-		}
+		writeContentTypeIfNeeded(request, httpPut);
 
 		return executeApiCall(httpPut);
 	}
@@ -271,11 +283,15 @@ public class Client implements Closeable {
 		}
 
 		httpDelete.setEntity(new StringEntity(request.getBody(), Charset.forName("UTF-8")));
-		if (request.getBody() != "") {
-			httpDelete.setHeader("Content-Type", "application/json");
-		}
+		writeContentTypeIfNeeded(request, httpDelete);
 
 		return executeApiCall(httpDelete);
+	}
+
+	private void writeContentTypeIfNeeded(Request request, HttpMessage httpMessage) {
+		if (!"".equals(request.getBody())) {
+			httpMessage.setHeader("Content-Type", "application/json");
+		}
 	}
 
 	private Response executeApiCall(HttpRequestBase httpPost) throws IOException {
@@ -329,7 +345,9 @@ public class Client implements Closeable {
 
 	@Override
 	public void close() throws IOException {
-		this.httpClient.close();
+		if(this.createdHttpClient) {
+      this.httpClient.close();
+    }
 	}
 
 	@Override

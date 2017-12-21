@@ -11,7 +11,7 @@
   <packaging>jar</packaging>
   <name>A simple HTTP client</name>
   <description>HTTP REST client, simplified for Java</description>
-  <version>4.1.0</version>
+  <version>4.2.0</version>
   <url>https://github.com/sendgrid/java-http-client</url>
   <licenses>
     <license>
@@ -54,4 +54,27 @@
       <version>4.5.2</version>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.7.7.201606060606</version>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>prepare-agent</goal>
+                </goals>
+            </execution>
+            <execution>
+                <id>report</id>
+                <phase>test</phase>
+                <goals>
+                    <goal>report</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
