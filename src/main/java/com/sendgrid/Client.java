@@ -345,9 +345,7 @@ public class Client implements Closeable {
 
 	@Override
 	public void close() throws IOException {
-		if(this.createdHttpClient) {
-      this.httpClient.close();
-    }
+      		this.httpClient.close();
 	}
 
 	@Override
