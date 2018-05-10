@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/sendgrid/java-http-client.svg?branch=master)](https://travis-ci.org/sendgrid/java-http-client)
 [![Maven Central](https://img.shields.io/maven-central/v/com.sendgrid/java-http-client.svg)](http://mvnrepository.com/artifact/com.sendgrid/java-http-client)
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.txt)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md)
 [![Twitter Follow](https://img.shields.io/twitter/follow/sendgrid.svg?style=social&label=Follow)](https://twitter.com/sendgrid)
 [![GitHub contributors](https://img.shields.io/github/contributors/sendgrid/java-http-client.svg)](https://github.com/sendgrid/java-http-client/graphs/contributors)
 
@@ -39,7 +39,7 @@ All updates to this project is documented in our [CHANGELOG](https://github.com/
 ...
 dependencies {
   ...
-  compile 'com.sendgrid:java-http-client:4.1.1'
+  compile 'com.sendgrid:java-http-client:4.2.0'
 }
 
 repositories {
@@ -54,7 +54,7 @@ repositories {
 <dependency>
     <groupId>com.sendgrid</groupId>
     <artifactId>java-http-client</artifactId>
-    <version>4.1.1</version>
+    <version>4.2.0</version>
 </dependency>
 ```
 
@@ -119,6 +119,8 @@ try {
 # Usage
 
 - [Example Code](https://github.com/sendgrid/java-http-client/tree/master/examples)
+- [Library Usage Documentation](USAGE.md)
+
 
 The example uses SendGrid, you can get your free account [here](https://sendgrid.com/free?source=java-http-client).
 
@@ -135,6 +137,14 @@ mvn package
 cd examples
 javac -classpath {path_to}/sendgrid-java-http-client-4.0.0-jar.jar:. Example.java && java -classpath {path_to}/sendgrid-java-http-client-4.0.0-jar.jar:. Example
 ```
+
+## Environment Variables 
+
+You can do the following to create a .env file:
+
+```cp .env_example .env```
+
+Then, just add your API Key into your .env file.
 
 <a name="roadmap"></a>
 # Roadmap

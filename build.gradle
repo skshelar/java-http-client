@@ -17,7 +17,7 @@ apply plugin: 'signing'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 group         = 'com.sendgrid'
-version       = '4.1.1'
+version       = '4.2.0'
 ext.packaging = 'jar'
 
 allprojects {
@@ -29,10 +29,6 @@ allprojects {
 if (!hasProperty("sonatypeUsername")) {
   ext.sonatypeUsername = null
   ext.sonatypePassword = null
-}
-
-task wrapper(type: Wrapper) {
-  gradleVersion = '1.8'
 }
 
 buildscript {
